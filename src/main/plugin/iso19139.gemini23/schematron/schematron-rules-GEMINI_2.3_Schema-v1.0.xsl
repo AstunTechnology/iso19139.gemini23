@@ -5190,54 +5190,24 @@
 
   <!--RULE
       -->
-<xsl:template match="/*[1]/gmd:identificationInfo[1]" priority="1000" mode="M129">
+<xsl:template match="//gmd:MD_Metadata[1]/gmd:identificationInfo[1]/*[not(substring-before(name(), concat(':', local-name())) = 'geonet')][1]"
+                 priority="1000"
+                 mode="M129">
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
-                       context="/*[1]/gmd:identificationInfo[1]"/>
-      <xsl:variable name="isData"
-                    select="../gmd:hierarchyLevel[1]/gmd:MD_ScopeCode/@codeListValue='dataset' or                             ../gmd:hierarchyLevel[1]/gmd:MD_ScopeCode/@codeListValue='series'"/>
-      <xsl:variable name="isService"
-                    select="../gmd:hierarchyLevel[1]/gmd:MD_ScopeCode/@codeListValue='service'"/>
-      <xsl:variable name="dataIdExists"
-                    select="count(*[local-name()='MD_DataIdentification'])=1 or                                   count(*[@gco:isoType='gmd:MD_DataIdentification'])=1"/>
-      <xsl:variable name="serviceIdExists"
-                    select="count(*[local-name()='SV_ServiceIdentification'])=1 or                                   count(*[@gco:isoType='srv:SV_ServiceIdentification'])=1"/>
-
-      <!--REPORT
-      -->
-<xsl:if test="$isData">
-         <svrl:successful-report xmlns:svrl="http://purl.oclc.org/dsdl/svrl" ref="#_{geonet:element/@ref}"
-                                 test="$isData">
-            <xsl:attribute name="location">
-               <xsl:apply-templates select="." mode="schematron-select-full-path"/>
-            </xsl:attribute>
-            <svrl:text>Resource type is data</svrl:text>
-         </svrl:successful-report>
-      </xsl:if>
-
-      <!--REPORT
-      -->
-<xsl:if test="$isService">
-         <svrl:successful-report xmlns:svrl="http://purl.oclc.org/dsdl/svrl" ref="#_{geonet:element/@ref}"
-                                 test="$isService">
-            <xsl:attribute name="location">
-               <xsl:apply-templates select="." mode="schematron-select-full-path"/>
-            </xsl:attribute>
-            <svrl:text>Resource type is service</svrl:text>
-         </svrl:successful-report>
-      </xsl:if>
+                       context="//gmd:MD_Metadata[1]/gmd:identificationInfo[1]/*[not(substring-before(name(), concat(':', local-name())) = 'geonet')][1]"/>
 
       <!--ASSERT
       -->
 <xsl:choose>
-         <xsl:when test="not($isData) or                 ( $isData and $dataIdExists ) or                 count(../gmd:hierarchyLevel) = 0"/>
+         <xsl:when test="         ((preceding::gmd:hierarchyLevel[1]/*[1]/@codeListValue = 'dataset' or         preceding::gmd:hierarchyLevel[1]/*[1]/@codeListValue = 'series') and         (local-name() = 'MD_DataIdentification' or */@gco:isoType = 'gmd:MD_DataIdentification')) or         (preceding::gmd:hierarchyLevel[1]/*[1]/@codeListValue != 'dataset' and         preceding::gmd:hierarchyLevel[1]/*[1]/@codeListValue != 'series') or         count(preceding::gmd:hierarchyLevel) = 0"/>
          <xsl:otherwise>
             <svrl:failed-assert xmlns:svrl="http://purl.oclc.org/dsdl/svrl" ref="#_{geonet:element/@ref}"
-                                test="not($isData) or ( $isData and $dataIdExists ) or count(../gmd:hierarchyLevel) = 0">
+                                test="((preceding::gmd:hierarchyLevel[1]/*[1]/@codeListValue = 'dataset' or preceding::gmd:hierarchyLevel[1]/*[1]/@codeListValue = 'series') and (local-name() = 'MD_DataIdentification' or */@gco:isoType = 'gmd:MD_DataIdentification')) or (preceding::gmd:hierarchyLevel[1]/*[1]/@codeListValue != 'dataset' and preceding::gmd:hierarchyLevel[1]/*[1]/@codeListValue != 'series') or count(preceding::gmd:hierarchyLevel) = 0">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-select-full-path"/>
                </xsl:attribute>
-               <svrl:text>AT-2a: The first identification information element shall be of type
-    gmd:MD_DataIdentification. </svrl:text>
+               <svrl:text> AT-2a: The first identification information element shall be of type
+        gmd:MD_DataIdentification. </svrl:text>
             </svrl:failed-assert>
          </xsl:otherwise>
       </xsl:choose>
@@ -5245,15 +5215,15 @@
       <!--ASSERT
       -->
 <xsl:choose>
-         <xsl:when test="not($isService) or                 ( $isService and $serviceIdExists ) or                 count(../gmd:hierarchyLevel) = 0"/>
+         <xsl:when test="         ((preceding::gmd:hierarchyLevel[1]/*[1]/@codeListValue = 'service') and         (local-name() = 'SV_ServiceIdentification' or */@gco:isoType = 'srv:SV_ServiceIdentification')) or         (preceding::gmd:hierarchyLevel[1]/*[1]/@codeListValue != 'service') or         count(preceding::gmd:hierarchyLevel) = 0"/>
          <xsl:otherwise>
             <svrl:failed-assert xmlns:svrl="http://purl.oclc.org/dsdl/svrl" ref="#_{geonet:element/@ref}"
-                                test="not($isService) or ( $isService and $serviceIdExists ) or count(../gmd:hierarchyLevel) = 0">
+                                test="((preceding::gmd:hierarchyLevel[1]/*[1]/@codeListValue = 'service') and (local-name() = 'SV_ServiceIdentification' or */@gco:isoType = 'srv:SV_ServiceIdentification')) or (preceding::gmd:hierarchyLevel[1]/*[1]/@codeListValue != 'service') or count(preceding::gmd:hierarchyLevel) = 0">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-select-full-path"/>
                </xsl:attribute>
-               <svrl:text>AT-2b: The first identification information element shall be of type
-    srv:SV_ServiceIdentification. </svrl:text>
+               <svrl:text> AT-2b: The first identification information element shall be of type
+        srv:SV_ServiceIdentification. </svrl:text>
             </svrl:failed-assert>
          </xsl:otherwise>
       </xsl:choose>
