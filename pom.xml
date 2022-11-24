@@ -5,39 +5,47 @@
   <parent>
     <artifactId>gn-schemas</artifactId>
     <groupId>org.geonetwork-opensource.schemas</groupId>
-    <version>4.0.6-SNAPSHOT</version>
+    <version>4.2.2-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>gn-schema-iso19139.gemini23</artifactId>
-  <name>Gemini 2.3 Metadata Profile</name>
-  <packaging>jar</packaging>
+
+  <artifactId>schema-iso19139.gemini23</artifactId>
+
+  <name>ISO 19139 Gemini 2.3 Metadata Profile</name>
+  <description>
+    GeoNetwork schema plugin for the Gemini 2.3 profile for datasets, series and services.
+  </description>
 
   <dependencies>
     <dependency>
-      <groupId>org.geonetwork-opensource.schemas</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>gn-schema-core</artifactId>
       <version>${project.version}</version>
+      <scope>provided</scope>
     </dependency>
+
     <dependency>
-      <groupId>org.geonetwork-opensource.schemas</groupId>
-      <artifactId>gn-schema-core</artifactId>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>gn-schema-iso19139</artifactId>
       <version>${project.version}</version>
-      <type>test-jar</type>
-      <scope>test</scope>
+      <scope>provided</scope>
     </dependency>
+
     <dependency>
       <groupId>org.xmlunit</groupId>
       <artifactId>xmlunit-core</artifactId>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.xmlunit</groupId>
       <artifactId>xmlunit-matchers</artifactId>
+      <scope>provided</scope>
     </dependency>
   </dependencies>
 
-
   <build>
+
     <resources>
       <resource>
         <directory>src/main/config/translations</directory>
@@ -46,29 +54,46 @@
       <resource>
         <directory>src/main/resources</directory>
       </resource>
+      <resource>
+        <directory>src/main/plugin</directory>
+        <targetPath>plugin</targetPath>
+      </resource>
     </resources>
-
 
     <plugins>
       <plugin>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>2.5</version>
+        <executions>
+          <execution>
+            <id>test-jar</id>
+            <goals>
+              <goal>test-jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-assembly-plugin</artifactId>
         <executions>
           <execution>
-            <id>plugin-assembly</id>
             <phase>package</phase>
-            <goals><goal>single</goal></goals>
-            <inherited>false</inherited>
+            <goals>
+              <goal>single</goal>
+            </goals>
             <configuration>
-             <appendAssemblyId>false</appendAssemblyId>
-             <descriptors>
-              <descriptor>src/assembly/schema-plugin.xml</descriptor>
-             </descriptors>
+              <finalName>${project.artifactId}-${project.version}</finalName>
+              <appendAssemblyId>false</appendAssemblyId>
+              <descriptors>
+                <descriptor>src/assembly/schema-plugin.xml</descriptor>
+              </descriptors>
             </configuration>
           </execution>
         </executions>
       </plugin>
     </plugins>
-
   </build>
 
   <profiles>
