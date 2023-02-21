@@ -813,6 +813,7 @@
       <ol class="help-block">
         <li>Record the format from the dropdown list, and the version (if known).</li>
         <li>If the version is not known, record it as "unknown"</li>
+        <li>If the version is recorded as "unknown" make sure the nilReason is not filled in as well</li>
         <li>For more guidelines see <a target="_blank" href="https://www.agi.org.uk/40-gemini/1062-gemini-datasets-and-data-series#21">Gemini Guidance</a></li>
       </ol>
       </div>
