@@ -403,12 +403,23 @@
 
     <!-- Add gco:CharacterString child nodes to elements with gco:nilReason attributes so they display
     in the editor, then use update-fixed-info.xsl to get rid of them if not required, keep also gco:nilReason attribute -->
-    <xsl:template match="//*[(@gco:nilReason='inapplicable' or @gco:nilReason='unknown' or @gco:nilReason='missing') and not(gco:CharacterString) and name() != 'gmd:verticalElement' and name() != 'gmd:hierarchyLevelName']" priority="10">
+    <xsl:template match="//*[(@gco:nilReason='inapplicable' or @gco:nilReason='unknown' or @gco:nilReason='missing') and not(gco:CharacterString) and name() != 'gmd:verticalElement' and name() != 'gmd:hierarchyLevelName' and name() != 'gmd:linkage']" priority="10">
+      <xsl:message>=== Expanded empty CharacterString with nilReason===</xsl:message>
       <xsl:copy>
         <xsl:apply-templates select="@*|*"/>
         <xsl:element name="gco:CharacterString"/>
       </xsl:copy>
     </xsl:template>
+
+    <!-- Add gmd:URL child nodes to gmd:linkage elements with gco:nilReason attributes so they display
+    in the editor, then use update-fixed-info.xsl to get rid of them if not required, keep also gco:nilReason attribute -->
+    <!--<xsl:template match="//*[(@gco:nilReason='inapplicable' or @gco:nilReason='unknown' or @gco:nilReason='missing') and not(gmd:URL) and name() = 'gmd:linkage']" priority="100">
+      <xsl:message>=== Expanded empty URL with nilReason===</xsl:message>
+      <xsl:copy>
+        <xsl:apply-templates select="@*|*"/>
+        <xsl:element name="gmd:URL"/>
+      </xsl:copy>
+    </xsl:template>-->
 
   <!-- copy everything else -->
 
