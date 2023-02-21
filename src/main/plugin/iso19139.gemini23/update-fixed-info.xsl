@@ -143,10 +143,10 @@
   <xsl:template match="//*[(@gco:nilReason='inapplicable' or @gco:nilReason='unknown' or @gco:nilReason='missing')]/gco:CharacterString" priority="10">
     <xsl:choose>
       <xsl:when test="not(text())">
-        <xsl:message>Empty: <xsl:value-of select="name()" /></xsl:message>
+        <xsl:message>=== Removing empty characterString element ===</xsl:message>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:message>Not Empty: <xsl:value-of select="name()" /></xsl:message>
+        <xsl:message>=== Retaining completed characterString element ===</xsl:message>
         <xsl:copy>
           <xsl:apply-templates select="@*|node()"/>
         </xsl:copy>
@@ -158,10 +158,10 @@
   <xsl:template match="//*[(@gco:nilReason='inapplicable' or @gco:nilReason='unknown' or @gco:nilReason='missing')]/gmd:URL" priority="10">
     <xsl:choose>
       <xsl:when test="not(text())">
-        <xsl:message>Empty: <xsl:value-of select="name()" /></xsl:message>
+        <xsl:message>=== Removing empty URL element ===</xsl:message>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:message>Not Empty: <xsl:value-of select="name()" /></xsl:message>
+        <xsl:message>=== Retaining completed URL element ===</xsl:message>
         <xsl:copy>
           <xsl:apply-templates select="@*|node()"/>
         </xsl:copy>
