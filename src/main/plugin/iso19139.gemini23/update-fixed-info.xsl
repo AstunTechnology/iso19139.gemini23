@@ -250,4 +250,19 @@
         </xsl:copy>
       </xsl:template>
 
+       <!--  Delete empty srv:operateson elements  -->
+  <xsl:template match="srv:operatesOn" priority="100">
+        <xsl:choose>
+            <xsl:when test="not(string(@xlink:href)) or not(string(@uuidref))">
+                <xsl:message>=== Removing Empty Coupled Resource ===</xsl:message>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:message>=== Retaining Non-Empty Coupled Resource ===</xsl:message>
+                <xsl:copy>
+                    <xsl:apply-templates select="@*|node()"/>
+                </xsl:copy>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+
 </xsl:stylesheet>

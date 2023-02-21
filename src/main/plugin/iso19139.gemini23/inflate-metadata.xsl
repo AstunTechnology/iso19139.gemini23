@@ -345,7 +345,7 @@
         <xsl:copy-of select="srv:operatesOn"/>
         <!-- Add srv:operatesOn if missing -->
         <xsl:if test="not(srv:operatesOn)">
-          <srv:operatesOn></srv:operatesOn>
+          <srv:operatesOn xlink:href=""/>
          </xsl:if>
       </xsl:copy>
     </xsl:template>
