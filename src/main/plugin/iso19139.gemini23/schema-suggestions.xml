@@ -214,7 +214,7 @@
     <suggest name="gmd:northBoundLatitude"/>
   </field>
 
-  <field name="gmd:attributes">
+  <!-- <field name="gmd:attributes">
     <suggest name="uuidref"/>
   </field>
 
@@ -248,7 +248,7 @@
 
   <field name="gmd:source">
     <suggest name="uuidref"/>
-  </field>
+  </field> -->
 
   <!--<field name="gmd:featureCatalogueCitation">
     <suggest name="uuidref"/>

@@ -169,6 +169,12 @@
     </xsl:choose>
   </xsl:template>
 
+  <!-- remove empty uuidref attributes -->
+  <xsl:template match="//*[@uuidref[not(string())]]" priority="10">
+    <xsl:message>=== Removing empty uuidref ===</xsl:message>
+              <xsl:apply-templates select="node()"/>
+         </xsl:template>
+
   <!-- remove whole vertical element if both min and max values are empty or not present -->
   <xsl:template match="gmd:verticalElement">
     <xsl:variable name="hasMinimumValue" select="string(gmd:EX_VerticalExtent/gmd:minimumValue/gco:Real)" />
