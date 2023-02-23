@@ -665,6 +665,13 @@
       <p class="help-block">This is the date or date range that identifies the currency of the data. It may refer to the period of collection, or the date at which it is deemed to be current. Mandatory for Datasets and Series.</p>
       <ol class="help-block">
         <li>This element should not be confused with Dataset reference date which is an identifying date for the data resource.</li>
+        <li>The correct way to indicate the end temporal extent being "present day" or similar is as follows:
+          <ul>
+            <li>Activate "More details" from clicking on the eye button at the top right of the screen</li>
+            <li>From the available options below the "End date" field, choose "Indeterminate position"</li>
+            <li>From the "Indeterminate position" dropdown, choose "Now"</li>
+          </ul>
+        </li>
         <li>For more guidelines see <a target="_blank" href="https://www.agi.org.uk/40-gemini/1062-gemini-datasets-and-data-series#7">Gemini Guidance</a></li>
       </ol>
       </div>
@@ -676,6 +683,13 @@
       <p class="help-block">This is the date or date range that identifies the currency of the data. It may refer to the period of collection, or the date at which it is deemed to be current.</p>
       <ol class="help-block">
         <li>This element should not be confused with Dataset reference date which is an identifying date for the data resource.</li>
+        <li>The correct way to indicate the end temporal extent being "present day" or similar is as follows:
+          <ul>
+            <li>Activate "More details" from clicking on the eye button at the top right of the screen</li>
+            <li>From the available options below the "End date" field, choose "Indeterminate position"</li>
+            <li>From the "Indeterminate position" dropdown, choose "Now"</li>
+          </ul>
+        </li>
         <li>For more guidelines see <a target="_blank" href="https://www.agi.org.uk/40-gemini/1063-gemini-services#7">Gemini Guidance</a></li>
       </ol>
       </div>
