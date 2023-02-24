@@ -3497,11 +3497,140 @@
           </field>
           <text ref="bboxsrv_help" if="count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification) > 0"/>
 
-          <field
+          <!-- temporal extent section -->
+          <!-- <field
             xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:extent/gmd:EX_Extent/gmd:temporalElement"
             if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0">
           </field>
+          <text ref="tempextent_help" if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0"/> -->
+          <section name="temporalSection">
+          <field name="temporalRangeSection" templateModeOnly="true" notDisplayedIfMissing="true"
+                   xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:extent/gmd:EX_Extent/gmd:temporalElement"
+                   if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0">
+              <template>
+                <values>
+                  <!-- -Need a * for gml:TimePeriodTypeCHOICE_ELEMENT2 added by editor enumerated tree
+                        but this will make the XSLT formatter fails. Using // to access the element in both case. -->
+                  <key label="beginPosition"
+                       xpath="gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod//gml:beginPosition"
+                       use="gn-date-picker"
+                       tooltip="gmd:extent|gmd:EX_TemporalExtent">
+                    <directiveAttributes
+                      data-tag-name="gml:beginPosition"
+                      data-indeterminate-position="eval#gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/*/gml:beginPosition/@indeterminatePosition"/>
+
+                  </key>
+                  <key label="endPosition"
+                       xpath="gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod//gml:endPosition"
+                       use="gn-date-picker"
+                       tooltip="gmd:extent|gmd:EX_TemporalExtent">
+                    <directiveAttributes
+                      data-tag-name="gml:endPosition"
+                      data-indeterminate-position="eval#gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/*/gml:endPosition/@indeterminatePosition"/>
+
+
+                  </key>
+                </values>
+                <snippet>
+                  <gmd:temporalElement>
+                    <gmd:EX_TemporalExtent>
+                      <gmd:extent>
+                        <gml:TimePeriod gml:id="">
+                          {{beginPosition}}
+                          {{endPosition}}
+                        </gml:TimePeriod>
+                      </gmd:extent>
+                    </gmd:EX_TemporalExtent>
+                  </gmd:temporalElement>
+                </snippet>
+              </template>
+            </field>
+
+          <action type="add" name="extent" or="extent" btnLabel="temporalRangeSection"
+                  in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification"
+                  if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:extent/gmd:EX_Extent/gmd:temporalElement) = 0">
+            <template>
+              <snippet>
+                <gmd:extent>
+                  <gmd:EX_Extent>
+                    <gmd:temporalElement>
+                      <gmd:EX_TemporalExtent>
+                        <gmd:extent>
+                          <gml:TimePeriod gml:id="">
+                            <gml:beginPosition/>
+                            <gml:endPosition/>
+                          </gml:TimePeriod>
+                        </gmd:extent>
+                      </gmd:EX_TemporalExtent>
+                    </gmd:temporalElement>
+                  </gmd:EX_Extent>
+                </gmd:extent>
+              </snippet>
+            </template>
+          </action>
+
+          <field name="temporalRangeSection" templateModeOnly="true" notDisplayedIfMissing="true"
+                   xpath="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/srv:extent/gmd:EX_Extent/gmd:temporalElement"
+                   if="count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification) > 0">
+              <template>
+                <values>
+                  <!-- Need a * for gml:TimePeriodTypeCHOICE_ELEMENT2 added by editor enumerated tree -->
+                  <key label="beginPosition"
+                       xpath="gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod//gml:beginPosition"
+                       use="gn-date-picker"
+                       tooltip="gmd:extent|gmd:EX_TemporalExtent">
+                    <directiveAttributes data-tag-name="gml:beginPosition"/>
+                  </key>
+                  <key label="endPosition"
+                       xpath="gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod//gml:endPosition"
+                       use="gn-date-picker"
+                       tooltip="gmd:extent|gmd:EX_TemporalExtent"
+                  >
+                    <directiveAttributes
+                      data-tag-name="gml:endPosition"/>
+                  </key>
+
+                </values>
+                <snippet>
+                  <gmd:temporalElement>
+                    <gmd:EX_TemporalExtent>
+                      <gmd:extent>
+                        <gml:TimePeriod gml:id="">
+                          {{beginPosition}}
+                          {{endPosition}}
+                        </gml:TimePeriod>
+                      </gmd:extent>
+                    </gmd:EX_TemporalExtent>
+                  </gmd:temporalElement>
+                </snippet>
+              </template>
+            </field>
+
+          <action type="add" name="extent" or="extent" btnLabel="temporalRangeSection"
+                  in="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification"
+                  if="count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/srv:extent/gmd:EX_Extent/gmd:temporalElement) = 0">
+            <template>
+              <snippet>
+                <srv:extent>
+                  <gmd:EX_Extent>
+                    <gmd:temporalElement>
+                      <gmd:EX_TemporalExtent>
+                        <gmd:extent>
+                          <gml:TimePeriod gml:id="">
+                            <gml:beginPosition/>
+                            <gml:endPosition/>
+                          </gml:TimePeriod>
+                        </gmd:extent>
+                      </gmd:EX_TemporalExtent>
+                    </gmd:temporalElement>
+                  </gmd:EX_Extent>
+                </srv:extent>
+              </snippet>
+            </template>
+          </action>
           <text ref="tempextent_help" if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0"/>
+        </section>
+          <!-- temporal extent section -->
 
           <field
             xpath="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/srv:extent/gmd:EX_Extent/gmd:temporalElement"
@@ -3519,7 +3648,7 @@
             if="count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification) > 0">
           </field>
 
-          <!-- addverticalelement datasets -->
+          <!-- add verticalelement datasets -->
 
           <action type="add" btnLabel="addVerticalExtent" name="addVerticalExtent" or="verticalElement"
                   in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:extent/gmd:EX_Extent">
@@ -3542,7 +3671,7 @@
             </template>
           </action>
 
-           <!-- addverticalelement services -->
+           <!-- add verticalelement services -->
 
           <action type="add" btnLabel="addVerticalExtent" name="addVerticalExtent" or="verticalElement"
                   in="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/srv:extent/gmd:EX_Extent">
@@ -3579,7 +3708,7 @@
 
           <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:supplementalInformation"/>
           <text ref="supplemental_help" if="count(/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:supplementalInformation) > 0"/>
-       </section> <!--  end indentification info section -->
+       </section> <!--  end identification info section -->
 
         <section xpath="/gmd:MD_Metadata/gmd:referenceSystemInfo"  or="referenceSystemInfo" in="/gmd:MD_Metadata" />
         <text ref="spatialref_help" if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0"/>
