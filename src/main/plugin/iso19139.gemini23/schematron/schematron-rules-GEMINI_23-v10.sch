@@ -261,35 +261,53 @@
         extent shall be implemented using gml:TimePeriod or gml:TimeInstant. </sch:assert>
     </sch:rule>
   </sch:pattern>
-  <sch:pattern fpi="Gemini2-mi7-endpos">
+  <sch:pattern fpi="Gemini2-mi7-endpos-a">
     <sch:rule
       context="
-        //gmd:MD_Metadata[1]/gmd:identificationInfo[1]/*[1]/gmd:extent/*[1]/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:endPosition |
-        //gmd:MD_Metadata[1]/gmd:identificationInfo[1]/*[1]/gmd:extent/*[1]/gmd:temporalElement/*[@gco:isoType = 'gmd:EX_TemporalExtent'][1]/gmd:extent/gml:TimePeriod/gml:endPosition |
-        //gmd:MD_Metadata[1]/gmd:identificationInfo[1]/*[1]/srv:extent/*[1]/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:endPosition |
-        //gmd:MD_Metadata[1]/gmd:identificationInfo[1]/*[1]/srv:extent/*[1]/gmd:temporalElement/*[@gco:isoType = 'gmd:EX_TemporalExtent'][1]/gmd:extent/gml:TimePeriod/gml:endPosition">
-      <sch:report
-        test="((@indeterminatePosition = 'unknown' or @indeterminatePosition = 'now') and normalize-space(.))"
-        > MI-7b (Temporal Extent): When indeterminatePosition='unknown' or indeterminatePosition='now' are specified
-        endPosition should be empty </sch:report>
+        //gmd:MD_Metadata[1]/gmd:identificationInfo[1]/*[1]/gmd:extent/*[1]/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod//gml:endPosition |
+        //gmd:MD_Metadata[1]/gmd:identificationInfo[1]/*[1]/gmd:extent/*[1]/gmd:temporalElement/*[@gco:isoType = 'gmd:EX_TemporalExtent'][1]/gmd:extent/gml:TimePeriod//gml:endPosition |
+        //gmd:MD_Metadata[1]/gmd:identificationInfo[1]/*[1]/srv:extent/*[1]/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod//gml:endPosition |
+        //gmd:MD_Metadata[1]/gmd:identificationInfo[1]/*[1]/srv:extent/*[1]/gmd:temporalElement/*[@gco:isoType = 'gmd:EX_TemporalExtent'][1]/gmd:extent/gml:TimePeriod//gml:endPosition">
       <sch:assert
-        test="string-length() = 0 or string-length() = 4 or string-length() = 7 or string-length() = 10 or string-length() = 19"
-        > MI-7c (Temporal Extent): Date string doesn't have correct length, check it conforms to Gregorian calendar
+        test="not((@indeterminatePosition = 'unknown' or @indeterminatePosition = 'now') and normalize-space(.))"
+        > MI-7b (Temporal Extent): When indeterminatePosition='unknown' or indeterminatePosition='now' are specified
+        endPosition should be empty </sch:assert>
+        </sch:rule>
+  </sch:pattern>
+  <sch:pattern fpi="Gemini2-mi7-endpos-b">
+    <sch:rule
+      context="
+        //gmd:MD_Metadata[1]/gmd:identificationInfo[1]/*[1]/gmd:extent/*[1]/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod//gml:endPosition |
+        //gmd:MD_Metadata[1]/gmd:identificationInfo[1]/*[1]/gmd:extent/*[1]/gmd:temporalElement/*[@gco:isoType = 'gmd:EX_TemporalExtent'][1]/gmd:extent/gml:TimePeriod//gml:endPosition |
+        //gmd:MD_Metadata[1]/gmd:identificationInfo[1]/*[1]/srv:extent/*[1]/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod//gml:endPosition |
+        //gmd:MD_Metadata[1]/gmd:identificationInfo[1]/*[1]/srv:extent/*[1]/gmd:temporalElement/*[@gco:isoType = 'gmd:EX_TemporalExtent'][1]/gmd:extent/gml:TimePeriod//gml:endPosition">
+      <sch:assert
+        test="string-length(normalize-space(.)) = 0 or string-length(normalize-space(.)) = 4 or string-length(normalize-space(.)) = 7 or string-length(normalize-space(.)) = 10 or string-length(normalize-space(.)) = 19"
+        > MI-7c (Temporal Extent): End Position date string doesn't have correct length, check it conforms to Gregorian calendar
         and UTC as per ISO 8601 </sch:assert>
     </sch:rule>
   </sch:pattern>
-  <sch:pattern fpi="Gemini2-mi7-begpos">
+  <sch:pattern fpi="Gemini2-mi7-begpos-a">
     <sch:rule
       context="
-        //gmd:MD_Metadata[1]/gmd:identificationInfo[1]/*[1]/gmd:extent/*[1]/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:beginPosition |
-        //gmd:MD_Metadata[1]/gmd:identificationInfo[1]/*[1]/gmd:extent/*[1]/gmd:temporalElement/*[@gco:isoType = 'gmd:EX_TemporalExtent'][1]/gmd:extent/gml:TimePeriod/gml:beginPosition |
-        //gmd:MD_Metadata[1]/gmd:identificationInfo[1]/*[1]/srv:extent/*[1]/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:beginPosition |
-        //gmd:MD_Metadata[1]/gmd:identificationInfo[1]/*[1]/srv:extent/*[1]/gmd:temporalElement/*[@gco:isoType = 'gmd:EX_TemporalExtent'][1]/gmd:extent/gml:TimePeriod/gml:beginPosition">
-      <sch:report test="(@indeterminatePosition = 'unknown' and normalize-space(.))"> MI-7d (Temporal Extent): When
-        indeterminatePosition='unknown' is specified beginPosition should be empty </sch:report>
+        //gmd:MD_Metadata[1]/gmd:identificationInfo[1]/*[1]/gmd:extent/*[1]/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod//gml:beginPosition |
+        //gmd:MD_Metadata[1]/gmd:identificationInfo[1]/*[1]/gmd:extent/*[1]/gmd:temporalElement/*[@gco:isoType = 'gmd:EX_TemporalExtent'][1]/gmd:extent/gml:TimePeriod//gml:beginPosition |
+        //gmd:MD_Metadata[1]/gmd:identificationInfo[1]/*[1]/srv:extent/*[1]/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod//gml:beginPosition |
+        //gmd:MD_Metadata[1]/gmd:identificationInfo[1]/*[1]/srv:extent/*[1]/gmd:temporalElement/*[@gco:isoType = 'gmd:EX_TemporalExtent'][1]/gmd:extent/gml:TimePeriod//gml:beginPosition">
+      <sch:assert test="not(@indeterminatePosition = 'unknown' and normalize-space(.))"> MI-7d (Temporal Extent): When
+        indeterminatePosition='unknown' is specified beginPosition should be empty </sch:assert>
+         </sch:rule>
+  </sch:pattern>
+  <sch:pattern fpi="Gemini2-mi7-begpos-b">
+    <sch:rule
+      context="
+        //gmd:MD_Metadata[1]/gmd:identificationInfo[1]/*[1]/gmd:extent/*[1]/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod//gml:beginPosition |
+        //gmd:MD_Metadata[1]/gmd:identificationInfo[1]/*[1]/gmd:extent/*[1]/gmd:temporalElement/*[@gco:isoType = 'gmd:EX_TemporalExtent'][1]/gmd:extent/gml:TimePeriod//gml:beginPosition |
+        //gmd:MD_Metadata[1]/gmd:identificationInfo[1]/*[1]/srv:extent/*[1]/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod//gml:beginPosition |
+        //gmd:MD_Metadata[1]/gmd:identificationInfo[1]/*[1]/srv:extent/*[1]/gmd:temporalElement/*[@gco:isoType = 'gmd:EX_TemporalExtent'][1]/gmd:extent/gml:TimePeriod//gml:beginPosition">
       <sch:assert
-        test="string-length() = 0 or string-length() = 4 or string-length() = 7 or string-length() = 10 or string-length() = 19"
-        > MI-7e (Temporal Extent): Date string doesn't have correct length, check it conforms to Gregorian calendar
+        test="string-length(normalize-space(.)) = 0 or string-length(normalize-space(.)) = 4 or string-length(normalize-space(.)) = 7 or string-length(normalize-space(.)) = 10 or string-length(normalize-space(.)) = 19"
+        > MI-7e (Temporal Extent): Begin Position date string doesn't have correct length, check it conforms to Gregorian calendar
         and UTC as per ISO 8601 </sch:assert>
     </sch:rule>
   </sch:pattern>
@@ -1163,25 +1181,24 @@
     <sch:title>Metadata resource type test</sch:title>
     <sch:p>Test to ensure that metadata about datasets include the gmd:MD_DataIdentification element
       and metadata about services include the srv:SV_ServiceIdentification element</sch:p>
-    <sch:rule context="//gmd:MD_Metadata[1]/gmd:identificationInfo[1]/*[not(substring-before(name(), concat(':', local-name())) = 'geonet')][1]">
-      <sch:assert
-        test="
-        ((preceding::gmd:hierarchyLevel[1]/*[1]/@codeListValue = 'dataset' or
-        preceding::gmd:hierarchyLevel[1]/*[1]/@codeListValue = 'series') and
-        (local-name() = 'MD_DataIdentification' or */@gco:isoType = 'gmd:MD_DataIdentification')) or
-        (preceding::gmd:hierarchyLevel[1]/*[1]/@codeListValue != 'dataset' and
-        preceding::gmd:hierarchyLevel[1]/*[1]/@codeListValue != 'series') or
-        count(preceding::gmd:hierarchyLevel) = 0"
-        > AT-2a: The first identification information element shall be of type
-        gmd:MD_DataIdentification. </sch:assert>
-      <sch:assert
-        test="
-        ((preceding::gmd:hierarchyLevel[1]/*[1]/@codeListValue = 'service') and
-        (local-name() = 'SV_ServiceIdentification' or */@gco:isoType = 'srv:SV_ServiceIdentification')) or
-        (preceding::gmd:hierarchyLevel[1]/*[1]/@codeListValue != 'service') or
-        count(preceding::gmd:hierarchyLevel) = 0"
-        > AT-2b: The first identification information element shall be of type
-        srv:SV_ServiceIdentification. </sch:assert>
+    <sch:rule context="/*[1]/gmd:identificationInfo[1]">
+    <sch:let name="isData" value="../gmd:hierarchyLevel[1]/gmd:MD_ScopeCode/@codeListValue='dataset' or
+                            ../gmd:hierarchyLevel[1]/gmd:MD_ScopeCode/@codeListValue='series'"/>
+    <sch:let name="isService" value="../gmd:hierarchyLevel[1]/gmd:MD_ScopeCode/@codeListValue='service'"/>
+    <sch:let name="dataIdExists" value="count(*[local-name()='MD_DataIdentification'])=1 or
+                                  count(*[@gco:isoType='gmd:MD_DataIdentification'])=1"/>
+    <sch:let name="serviceIdExists" value="count(*[local-name()='SV_ServiceIdentification'])=1 or
+                                  count(*[@gco:isoType='srv:SV_ServiceIdentification'])=1"/>
+    <sch:report test="$isData">Resource type is data</sch:report>
+    <sch:report test="$isService">Resource type is service</sch:report>
+    <sch:assert test="not($isData) or
+                ( $isData and $dataIdExists ) or
+                count(../gmd:hierarchyLevel) = 0">AT-2a: The first identification information element shall be of type
+    gmd:MD_DataIdentification. </sch:assert>
+    <sch:assert test="not($isService) or
+                ( $isService and $serviceIdExists ) or
+                count(../gmd:hierarchyLevel) = 0">AT-2b: The first identification information element shall be of type
+    srv:SV_ServiceIdentification. </sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern fpi="Gemini2-at3">
