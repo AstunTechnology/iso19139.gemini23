@@ -15,12 +15,9 @@ Deprecated Versions:
 * [GeoNetwork 3.6.x](https://github.com/AstunTechnology/iso19139.gemini23/tree/3.6.x)
 * [GeoNetwork 3.8.x](https://github.com/AstunTechnology/iso19139.gemini23/tree/3.8.x)
 * [GeoNetwork 3.10.x](https://github.com/AstunTechnology/iso19139.gemini23/tree/3.10.x)
-
-Supported Versions:
-
 * [GeoNetwork 3.12.x](https://github.com/AstunTechnology/iso19139.gemini23/tree/3.12.x)
 
-Development Versions:
+Current Active Versions:
 
 * [GeoNetwork 4.2.x](https://github.com/AstunTechnology/iso19139.gemini23/tree/4.2.x)
 
