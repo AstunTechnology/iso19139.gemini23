@@ -139,8 +139,8 @@
     </gmd:LanguageCode>
   </xsl:template>
 
-  <!-- remove CharacterString elements with nilreasons of inapplicable, unknown or missing -->
-  <xsl:template match="//*[(@gco:nilReason='inapplicable' or @gco:nilReason='unknown' or @gco:nilReason='missing')]/gco:CharacterString" priority="10">
+  <!-- remove empty CharacterString elements with nilreasons of inapplicable, unknown or missing -->
+  <xsl:template match="//*[(@gco:nilReason='inapplicable' or @gco:nilReason='unknown')]/gco:CharacterString" priority="10">
     <xsl:choose>
       <xsl:when test="not(text())">
         <xsl:message>=== Removing empty characterString element ===</xsl:message>
@@ -155,7 +155,7 @@
   </xsl:template>
 
   <!-- remove URL elements with nilreasons of inapplicable, unknown or missing -->
-  <xsl:template match="//*[(@gco:nilReason='inapplicable' or @gco:nilReason='unknown' or @gco:nilReason='missing')]/gmd:URL" priority="10">
+  <xsl:template match="//*[(@gco:nilReason='inapplicable' or @gco:nilReason='unknown')]/gmd:URL" priority="10">
     <xsl:choose>
       <xsl:when test="not(text())">
         <xsl:message>=== Removing empty URL element ===</xsl:message>
