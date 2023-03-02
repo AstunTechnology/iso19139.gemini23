@@ -9,10 +9,10 @@
 
   <xsl:include href="iso19139.gemini23-to-jsonld.xsl"/>
 
-  <xsl:template match="/">
+    <xsl:template match="/">
     <textResponse>
       <xsl:apply-templates mode="getJsonLD"
-                           select="*/gmd:MD_Metadata"/>
+                           select="*/(gmd:MD_Metadata|*[@gco:isoType = 'gmd:MD_Metadata'])"/>
     </textResponse>
   </xsl:template>
 </xsl:stylesheet>
