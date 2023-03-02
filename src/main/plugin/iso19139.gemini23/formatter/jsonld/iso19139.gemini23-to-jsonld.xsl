@@ -44,6 +44,8 @@
   <xsl:import href="common/index-utils.xsl"/>
 
 
+
+
   <!-- Convert a hierarchy level into corresponding
   schema.org class. If no match, return http://schema.org/Thing
 
@@ -79,7 +81,7 @@
                           else concat($prefixedBy, 'Thing')"/>
   </xsl:function>
 
-
+  
   <!-- Define the root element of the resources
       and a catalogue id. -->
   <!--<xsl:param name="baseUrl"
@@ -90,7 +92,7 @@
   <xsl:param name="baseUrl"
              select="util:getSettingValue('nodeUrl')"/>
   <xsl:variable name="catalogueName"
-                select="''"/>
+                select="util:getSettingValue('system/site/name')"/>
 
   <!-- Schema.org document can't really contain
   translated text. So we can produce the JSON-LD
@@ -136,7 +138,7 @@
     </xsl:choose>
     <!-- TODO: Use the identifier property to attach any relevant Digital Object identifiers (DOIs). -->
 		"@id": "<xsl:value-of select="concat($baseUrl, 'api/records/', gmd:fileIdentifier/*/text())"/>",
-		"includedInDataCatalog":[{"url":"<xsl:value-of select="concat($baseUrl, 'search#', $catalogueName)"/>","@id":"<xsl:value-of select="concat($baseUrl, 'search#', $catalogueName)"/>""name":"<xsl:value-of select="$catalogueName"/>"}],
+		"includedInDataCatalog":[{"url":"<xsl:value-of select="concat($baseUrl, 'search#', $catalogueName)"/>","@id":"<xsl:value-of select="concat($baseUrl, 'search#')"/>","name":"<xsl:value-of select="$catalogueName"/>"}],
     <!-- TODO: is the dataset language or the metadata language ? -->
     "inLanguage":"<xsl:value-of select="if ($requestedLanguage  != '') then $requestedLanguage else $defaultLanguage"/>",
     <!-- TODO: availableLanguage -->
@@ -144,10 +146,9 @@
                                  select="gmd:identificationInfo/*/gmd:citation/*/gmd:title"/>,
 
     <!-- An alias for the item. -->
-    <xsl:for-each select="gmd:identificationInfo/*/gmd:citation/*/gmd:alternateTitle">
-      "alternateName": <xsl:apply-templates mode="toJsonLDLocalized"
-                                                  select="."/>,
-    </xsl:for-each>
+    
+    "alternateName": "<xsl:for-each select="gmd:identificationInfo/*/gmd:citation/*/gmd:alternateTitle">
+        <xsl:value-of select="."/><xsl:if test="position() != last()"> | </xsl:if></xsl:for-each>",
 
     <xsl:for-each select="gmd:identificationInfo/*/gmd:citation/*/gmd:date[gmd:dateType/*/@codeListValue='creation']/*/gmd:date/*/text()">
 		  "dateCreated": "<xsl:value-of select="."/>",
