@@ -355,17 +355,20 @@
 
 
 
-    <xsl:for-each select="gmd:identificationInfo/*/gmd:extent/*[gmd:geographicElement]">
+    <!-- spatialcoverage  -->
+        
     ,"spatialCoverage": {
-      "@type":"Place"
-      <xsl:for-each select="gmd:description[count(.//text() != '') > 0]">
-      ,"description": <xsl:apply-templates mode="toJsonLDLocalized"
-                                           select="."/>
+      "@type":"Place",
+
+      <!-- with identifier -->
+      <xsl:for-each select="gmd:identificationInfo/*/gmd:extent/*/gmd:geographicElement/*/gmd:geographicIdentifier/*/gmd:code[count(./text() != '') > 0]">
+      "identifier": <xsl:apply-templates mode="toJsonLDLocalized"
+                                           select="."/>,
       </xsl:for-each>
 
-
-      <xsl:for-each select="gmd:geographicElement/gmd:EX_GeographicBoundingBox">
-        ,"geo": {
+      <!-- with bbox coordinates -->
+      <xsl:for-each select="gmd:identificationInfo/*/gmd:extent/*/gmd:geographicElement/gmd:EX_GeographicBoundingBox">
+      "geo": {
           "@type":"GeoShape",
           "box": "<xsl:value-of select="string-join((
                                           gmd:southBoundLatitude/gco:Decimal,
@@ -376,7 +379,7 @@
         }
       </xsl:for-each>
     }
-    </xsl:for-each>
+   
 
 
     <xsl:if test="count(gmd:identificationInfo/*/gmd:extent/*/gmd:temporalElement/*/gmd:extent[normalize-space(.) != '']) > 0">
