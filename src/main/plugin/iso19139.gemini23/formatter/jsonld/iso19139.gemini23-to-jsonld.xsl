@@ -145,7 +145,7 @@
     "name": <xsl:apply-templates mode="toJsonLDLocalized"
                                  select="gmd:identificationInfo/*/gmd:citation/*/gmd:title"/>,
 
-    <!-- An alias for the item. -->
+    <!-- All alt titles concatenated as schema.org only allows one. -->
     
     "alternateName": "<xsl:for-each select="gmd:identificationInfo/*/gmd:citation/*/gmd:alternateTitle">
         <xsl:value-of select="."/><xsl:if test="position() != last()"> | </xsl:if></xsl:for-each>",
@@ -336,7 +336,7 @@
         "contentUrl":"<xsl:value-of select="gmd:linkage/gmd:URL/text()"/>",
         "encodingFormat":"<xsl:value-of select="if ($p != '') then $p else gmd:protocol/*/@xlink:href"/>",
         "name":"<xsl:value-of select="gmd:name/*/text()"/>",
-        "description":"<xsl:value-of select="gmd:description/*/text()"/>"
+        "description":"<xsl:value-of select="translate(gmd:description/*/text(),'\&quot;', '')"/>"
         }
         <xsl:if test="position() != last()">,</xsl:if>
       </xsl:for-each>
