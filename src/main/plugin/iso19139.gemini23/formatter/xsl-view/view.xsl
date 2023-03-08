@@ -970,27 +970,26 @@
   <div class="entry name">
       <dl class="gn-date">
         <dt>
-        <!-- eg gmd:DQ_DomainConsistency -->
         <xsl:call-template name="render-field-label">
           <xsl:with-param name="languages" select="$allLanguages"/>
         </xsl:call-template>
       </dt>
-      <xsl:if test="//gmd:title/(gmx:Anchor|gco:CharacterString)">
+      <xsl:if test="*//gmd:title/(gmx:Anchor|gco:CharacterString)">
         <dd>
-          <xsl:apply-templates mode="render-value" select="//gmd:title/(gmx:Anchor|gco:CharacterString)"/>
+          <xsl:apply-templates mode="render-value" select="*//gmd:title/(gmx:Anchor|gco:CharacterString)"/>
         </dd>
       </xsl:if>
       <dt>
-          <xsl:value-of select="tr:nodeLabel(tr:create($schema), //gmd:explanation/name(), null)"/>
+          <xsl:value-of select="tr:nodeLabel(tr:create($schema), *//gmd:explanation/name(), null)"/>
         </dt>
         <dd>
-          <xsl:apply-templates mode="render-value" select="//gmd:explanation"/>
+          <xsl:apply-templates mode="render-value" select="*//gmd:explanation"/>
         </dd>
         <dt>
-          <xsl:value-of select="tr:nodeLabel(tr:create($schema), //gmd:pass/name(), null)"/>
+          <xsl:value-of select="tr:nodeLabel(tr:create($schema), *//gmd:pass/name(), null)"/>
         </dt>
         <dd>
-          <xsl:apply-templates mode="render-value" select="//gmd:pass"/>
+          <xsl:apply-templates mode="render-value" select="*//gmd:pass"/>
         </dd>
       </dl>
     </div>
