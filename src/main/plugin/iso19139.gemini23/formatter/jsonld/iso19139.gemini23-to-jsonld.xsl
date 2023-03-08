@@ -360,11 +360,9 @@
     ,"spatialCoverage": {
       "@type":"Place",
 
-      <!-- with identifier -->
-      <xsl:for-each select="gmd:identificationInfo/*/gmd:extent/*/gmd:geographicElement/*/gmd:geographicIdentifier/*/gmd:code[count(./text() != '') > 0]">
-      "identifier": <xsl:apply-templates mode="toJsonLDLocalized"
-                                           select="."/>,
-      </xsl:for-each>
+      <!-- with identifier- multiples concatenated into single string as google doesn't like repeats -->
+      "identifier": "<xsl:for-each select="gmd:identificationInfo/*/gmd:extent/*/gmd:geographicElement/*/gmd:geographicIdentifier/*/gmd:code[count(./text() != '') > 0]">
+        <xsl:value-of select="."/><xsl:if test="position() != last()"> | </xsl:if></xsl:for-each>",
 
       <!-- with bbox coordinates -->
       <xsl:for-each select="gmd:identificationInfo/*/gmd:extent/*/gmd:geographicElement/gmd:EX_GeographicBoundingBox">
@@ -403,14 +401,19 @@
           <xsl:if test="position() != last()">,</xsl:if></xsl:for-each> ]}
     </xsl:if> -->
 
-    <xsl:if test="count(gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:otherConstraints[../gmd:accessConstraints]/gco:CharacterString) > 0"> 
+    <!-- limitations on public access- Gemini 25 -->
+    <xsl:variable name="gemini25" select="count(gmd:identificationInfo/*//gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:otherConstraints[../gmd:accessConstraints]/(gmx:Anchor|gco:Characterstring))" />
+    <xsl:message>=== Gemini25 = <xsl:value-of select="$gemini25"/></xsl:message>
+    <xsl:if test="$gemini25 > 0"> 
       ,"conditionsofAccess": [<xsl:for-each 
-        select="gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:otherConstraints[../gmd:accessConstraints]">
+        select="gmd:identificationInfo/*//gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:otherConstraints[../gmd:accessConstraints]">
           <xsl:apply-templates mode="toJsonLDLocalized" select="."/>
           <xsl:if test="position() != last()">,</xsl:if></xsl:for-each>]
     </xsl:if>
-
-    <xsl:if test="count(gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:otherConstraints[../gmd:useConstraints]/gco:CharacterString) > 0"> 
+    <!-- user constraints- Gemini 26 -->
+    <xsl:variable name="gemini26" select="count(gmd:identificationInfo/*//gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:otherConstraints[../gmd:useConstraints]/(gmx:Anchor|gco:Characterstring))" />
+    <xsl:message>=== Gemini26 = <xsl:value-of select="$gemini26"/></xsl:message>
+    <xsl:if test="  $gemini26 > 0"> 
       ,"license": {"@type": "CreativeWork", "name": "License Text", "Text": [<xsl:for-each 
         select="gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:otherConstraints[../gmd:useConstraints]">
           <xsl:apply-templates mode="toJsonLDLocalized" select="."/>
