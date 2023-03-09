@@ -605,10 +605,9 @@
   <xsl:template mode="render-field"
                 match="*[gmd:CI_ResponsibleParty]"
                 priority="100">
+
     <xsl:param name="layout"
                required="no"/>
-
-
     <xsl:variable name="email">
       <xsl:for-each select="*/gmd:contactInfo/
                                       */gmd:address/*/gmd:electronicMailAddress">

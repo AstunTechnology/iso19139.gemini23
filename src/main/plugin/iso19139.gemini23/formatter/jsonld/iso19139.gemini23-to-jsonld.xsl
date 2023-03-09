@@ -403,7 +403,6 @@
 
     <!-- limitations on public access- Gemini 25 -->
     <xsl:variable name="gemini25" select="count(gmd:identificationInfo/*//gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:otherConstraints[../gmd:accessConstraints]/(gmx:Anchor|gco:Characterstring))" />
-    <xsl:message>=== Gemini25 = <xsl:value-of select="$gemini25"/></xsl:message>
     <xsl:if test="$gemini25 > 0"> 
       ,"conditionsofAccess": [<xsl:for-each 
         select="gmd:identificationInfo/*//gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:otherConstraints[../gmd:accessConstraints]">
@@ -412,7 +411,6 @@
     </xsl:if>
     <!-- user constraints- Gemini 26 -->
     <xsl:variable name="gemini26" select="count(gmd:identificationInfo/*//gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:otherConstraints[../gmd:useConstraints]/(gmx:Anchor|gco:Characterstring))" />
-    <xsl:message>=== Gemini26 = <xsl:value-of select="$gemini26"/></xsl:message>
     <xsl:if test="  $gemini26 > 0"> 
       ,"license": {"@type": "CreativeWork", "name": "License Text", "Text": [<xsl:for-each 
         select="gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:otherConstraints[../gmd:useConstraints]">
