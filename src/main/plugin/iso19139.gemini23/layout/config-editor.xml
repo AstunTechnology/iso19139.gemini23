@@ -186,6 +186,15 @@
         data-insert-modes=""
         data-template-type="report"/>
     </for>
+    <for name="gmd:lineage" addDirective="data-gn-directory-entry-selector">
+      <directiveAttributes
+        data-template-add-action="true"
+        data-search-action="true"
+        data-popup-action="true"
+        data-filter='{"root": "gmd:LI_*"}'
+        data-insert-modes=""
+        data-template-type="report"/>
+    </for>
 
 
     <!-- Example configuration: Add onLine source from subtemplate
