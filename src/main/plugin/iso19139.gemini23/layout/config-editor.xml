@@ -191,9 +191,9 @@
         data-template-add-action="true"
         data-search-action="true"
         data-popup-action="true"
-        data-filter='{"root": "gmd:LI_*"}'
+        data-filter='{"root": "gmd:DQ_*"}'
         data-insert-modes=""
-        data-template-type="report"/>
+        data-template-type="lineage"/>
     </for>
 
 
