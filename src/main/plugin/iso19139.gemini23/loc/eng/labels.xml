@@ -765,29 +765,29 @@
     <description>Formal language used in Application Schema</description>
     <condition>mandatory</condition>
   </element>
-  <element name="gmd:contact" id="8.0" context="gmd:MD_Metadata">
+  <element name="gmd:contact" id="8.0">
     <condition>mandatory</condition>
-    <label>Metadata point of contact</label>
+    <label>Point of contact</label>
     <btnLabel>Add contact</btnLabel>
     <btnClass>fa fa-user-plus</btnClass>
     <description>Party responsible for the creation and maintenance of the metadata</description>
     <condition>mandatory</condition>
   </element>
-  <element name="gmd:contact" id="148.1" context="gmd:MD_MaintenanceInformation">
-    <label>Contact</label>
+  <!-- <element name="gmd:contact" id="148.1" context="gmd:MD_MaintenanceInformation">
+    <label>Contact2</label>
     <btnLabel>Add maintainer</btnLabel>
     <btnClass>fa fa-user-plus</btnClass>
     <description>Identification of, and means of communication with, person(s) and
-      organization(s) with responsability for maintaining the metadata
+      organization(s) with responsibility for maintaining the metadata
     </description>
   </element>
   <element name="gmd:contact" id="8.0">
-    <label>Metadata author</label>
+    <label>Metadata author3</label>
     <btnLabel>Add author</btnLabel>
     <btnClass>fa fa-user-plus</btnClass>
     <description>Party responsible for the metadata information</description>
     <condition>mandatory</condition>
-  </element>
+  </element> -->
   <element name="gmd:contactInfo" id="378.0">
     <description>Address of the responsible party</description>
     <label>Contact Information</label>
@@ -2147,7 +2147,7 @@
     <description>Point in a pixel corresponding to the Earth location of the pixel</description>
     <condition>mandatory</condition>
   </element>
-  <element name="gmd:pointOfContact" id="29.0" context="gmd:MD_DataIdentification">
+  <element name="gmd:pointOfContact" id="29.0">
     <label>Responsible organisation</label>
     <btnLabel>Add contact</btnLabel>
     <btnClass>fa fa-user-plus</btnClass>
@@ -2155,14 +2155,14 @@
     </description>
     <condition>mandatory</condition>
   </element>
-  <element name="gmd:pointOfContact" id="29.0" context="srv:SV_ServiceIdentification">
+  <!-- <element name="gmd:pointOfContact" id="29.0" context="srv:SV_ServiceIdentification">
     <label>Responsible organisation</label>
     <btnLabel>Add contact</btnLabel>
     <btnClass>fa fa-user-plus</btnClass>
     <description>Details of the organisation(s) responsible for the establishment, management, maintenance and distribution of the data resource
     </description>
     <condition>mandatory</condition>
-  </element>
+  </element> -->
   <element name="gmd:polygon" id="342.0">
     <label>Polygon</label>
     <description>Sets of points defining the bounding polygon</description>

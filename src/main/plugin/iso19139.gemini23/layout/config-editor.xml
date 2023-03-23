@@ -594,16 +594,11 @@
             xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:status">
           </field>
 
-          <!-- <field
-            xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:pointOfContact"
-            if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0">
-          </field> -->
-
-          <field name="pointOfContact"
+          <!-- <field name="pointOfContact"
                  xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:pointOfContact"
                  or="pointOfContact"
                  in="/gmd:MD_Metadata/gmd:identificationInfo/*"
-                 del="."/>
+                 del="."/> -->
 
           <!-- <action type="add" name="pointOfContact" btnLabel="addContact"
                   addDirective="data-gn-directory-entry-selector"
@@ -620,14 +615,28 @@
 
           
 
-          <text ref="responsibleparty_help" if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0"/>
+          <!-- <text ref="responsibleparty_help" if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0"/>
 
           <field
             xpath="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:pointOfContact"
             if="count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification) > 0">
-          </field>
+          </field> -->
 
-          <action type="add" name="pointOfContact" btnLabel="addContact"
+          <section name="gmd:pointOfContact">
+            <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:pointOfContact/*/gmd:individualName"  or="individualName"  in="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:pointOfContact/*" />
+            <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:pointOfContact/*/gmd:organisationName"  or="organisationName" in="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:pointOfContact/*"/>
+            <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:pointOfContact/*/gmd:positionName"  or="positionName" in="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:pointOfContact/*"/>
+            <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:pointOfContact/*/gmd:contactInfo/*/gmd:phone/*/gmd:voice"  or="voice" in="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:pointOfContact/*/gmd:contactInfo/*/gmd:phone/*" del="../.."/>
+            <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:pointOfContact/*/gmd:contactInfo/*/gmd:address/*/gmd:deliveryPoint"  or="deliveryPoint" in="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:pointOfContact/*/gmd:contactInfo/*/gmd:address/*"/>
+            <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:pointOfContact/*/gmd:contactInfo/*/gmd:address/*/gmd:city"  or="city" in="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:pointOfContact/*/gmd:contactInfo/*/gmd:address/*"/>
+            <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:pointOfContact/*/gmd:contactInfo/*/gmd:address/*/gmd:administrativeArea"  or="administrativeArea" in="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:pointOfContact/*/gmd:contactInfo/*/gmd:address/*"/>
+            <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:pointOfContact/*/gmd:contactInfo/*/gmd:address/*/gmd:postalCode"  or="postalCode" in="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:pointOfContact/*/gmd:contactInfo/*/gmd:address/*"/>
+            <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:pointOfContact/*/gmd:contactInfo/*/gmd:address/*/gmd:country"  or="country" in="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:pointOfContact/*/gmd:contactInfo/*/gmd:address/*"/>
+            <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:pointOfContact/*/gmd:contactInfo/*/gmd:address/*/gmd:electronicMailAddress"  or="electronicMailAddress" in="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:pointOfContact/*/gmd:contactInfo/*/gmd:address/*"/>
+            <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:pointOfContact/*/gmd:role"  or="role" in="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:pointOfContact/*"/>
+          </section>
+
+          <!-- <action type="add" name="pointOfContact" btnLabel="addContact"
             addDirective="data-gn-directory-entry-selector"
             or="pointOfContact"
             in="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification">
@@ -638,7 +647,7 @@
               data-popup-action="true"
               data-element-name="gmd:pointOfContact"
               data-variables="gmd:role/gmd:CI_RoleCode/@codeListValue~{role}"/>
-          </action>
+          </action> -->
 
 
 
@@ -1150,8 +1159,8 @@
           <text ref="metadatadatesrv_help" if="count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification) > 0"/>
           <field xpath="/gmd:MD_Metadata/gmd:metadataStandardName"/>
           <field xpath="/gmd:MD_Metadata/gmd:metadataStandardVersion"/>
-         <!--  <field xpath="/gmd:MD_Metadata/gmd:contact" or="contact" in="/gmd:MD_Metadata"/> -->
-<section name="gmd:contact">
+          <!-- <field xpath="/gmd:MD_Metadata/gmd:contact" or="contact" in="/gmd:MD_Metadata"/> -->
+          <section name="gmd:contact">
             <field xpath="/gmd:MD_Metadata/gmd:contact/*/gmd:individualName"  or="individualName"  in="/gmd:MD_Metadata/gmd:contact/*" />
             <field xpath="/gmd:MD_Metadata/gmd:contact/*/gmd:organisationName"  or="organisationName" in="/gmd:MD_Metadata/gmd:contact/*"/>
             <field xpath="/gmd:MD_Metadata/gmd:contact/*/gmd:positionName"  or="positionName" in="/gmd:MD_Metadata/gmd:contact/*"/>
