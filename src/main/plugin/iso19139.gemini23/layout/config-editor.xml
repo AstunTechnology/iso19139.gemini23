@@ -186,6 +186,15 @@
         data-insert-modes=""
         data-template-type="report"/>
     </for>
+    <for name="gmd:lineage" addDirective="data-gn-directory-entry-selector">
+      <directiveAttributes
+        data-template-add-action="true"
+        data-search-action="true"
+        data-popup-action="true"
+        data-filter='{"root": "gmd:LI_*"}'
+        data-insert-modes=""
+        data-template-type="lineage"/>
+    </for>
 
 
     <!-- Example configuration: Add onLine source from subtemplate
@@ -1113,15 +1122,17 @@
 
 </section>
         <!-- Start dataQualitySection -->
-          <!-- <section name="gmd:dataQualityInfo">
-            <field xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:scope"/>
-            <field xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report"/>
-            <field xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage"/>
-          </section> -->
-          <section xpath="/gmd:MD_Metadata/gmd:dataQualityInfo" or="dataQualityInfo"
-                 in="/gmd:MD_Metadata"/>
-           <text ref="dataquality_help" if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0"/>
+          <section name="gmd:dataQualityInfo">
+            <field xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:scope" or="scope" in="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality" />
+            <field xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report" or="report" in="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality"/>
+            <text ref="dataquality_help" if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0"/>
             <text ref="dataqualitysrv_help" if="count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification) > 0"/>
+            <field xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage" or="lineage" in="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality"/>
+            <text ref="lineage_help" if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0"/>
+          </section>
+          <!-- <section xpath="/gmd:MD_Metadata/gmd:dataQualityInfo" or="dataQualityInfo"
+                 in="/gmd:MD_Metadata"/> -->
+           
           <!-- End dataQualitySection -->
 
         <section name="gmd:MD_Metadata">
@@ -1192,6 +1203,7 @@
         <for name="gmd:otherConstraints"/>
         <for name="gmd:EX_TemporalExtent"/>
         <for name="gmd:report"/>
+        <for name="gmd:lineage"/>
       </flatModeExceptions>
 
       <!--

@@ -557,7 +557,7 @@
       </div>
   </div>
 </keywordsrv_help>
-<!-- <lineage_help>
+<lineage_help>
     <div class="row">
     <div class="col-xs-offset-2 col-xs-8">
       <p class="help-block">The purpose of this element is to give an indication of how the data resource was created. It is useful in determining its fitness for purpose.</p>
@@ -568,7 +568,7 @@
       </ol>
       </div>
   </div>
-</lineage_help> -->
+</lineage_help>
 <maintenance_help>
     <div class="row">
     <div class="col-xs-offset-2 col-xs-8">
@@ -868,8 +868,7 @@
       <ol class="help-block">
         <li>For INSPIRE compliance at least one <b>conformity report</b> where the <b>quality scope</b> is the entire dataset or series is required.</li>
         <li>Choose the appropriate report from the picker.</li>
-        <li>For more guidelines see <a target="_blank" href="https://www.agi.org.uk/agi-groups/standards-committee/uk-gemini/40-gemini/1062-gemini-datasets-and-data-series#52">Gemini Guidance</a></li>
-        <li>The <b>lineage</b> statement should indicate how the resource was created.</li>
+        <li>To add an additional data quality element, scoped to something other than the whole dataset, switch to advanced view</li>
         <li>For more guidelines see <a target="_blank" href="https://www.agi.org.uk/agi-groups/standards-committee/uk-gemini/40-gemini/1062-gemini-datasets-and-data-series#52">Gemini Guidance</a></li>
       </ol>
       </div>
@@ -882,6 +881,7 @@
       <ol class="help-block">
         <li>For INSPIRE compliance at least one <b>conformity report</b> where the <b>quality scope</b> is the entire service is required.</li>
         <li>Choose the appropriate report for either Spatial Data Services or Network Services respectively from the picker.</li>
+        <li>To add an additional data quality element, scoped to something other than the whole service, switch to advanced view</li>
         <li>For more guidelines see <a target="_blank" href="https://www.agi.org.uk/agi-groups/standards-committee/uk-gemini/40-gemini/1063-gemini-services#41">Gemini Guidance</a></li>
       </ol>
       </div>
