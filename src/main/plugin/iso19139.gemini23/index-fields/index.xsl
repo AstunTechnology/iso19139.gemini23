@@ -42,8 +42,8 @@
                 version="2.0">
 
   <xsl:import href="../../iso19139/index-fields/fn.xsl"/>
-  <xsl:import href="../../iso19139/index-fields/common/inspire-constant.xsl"/>
-  <xsl:import href="../../iso19139/index-fields/common/index-utils.xsl"/>
+  <xsl:import href="common/inspire-constant.xsl"/>
+  <xsl:import href="common/index-utils.xsl"/>
 
   <xsl:output name="default-serialize-mode"
               indent="no"
