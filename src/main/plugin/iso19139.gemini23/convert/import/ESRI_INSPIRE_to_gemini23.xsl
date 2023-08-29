@@ -149,7 +149,17 @@
 					<xsl:apply-templates select="//gmd:resourceConstraints" />
 					<xsl:apply-templates select="//srv:serviceType" />
 					<srv:extent>
-						<xsl:apply-templates select="//*:extent/child::*" />
+						<gmd:EX_Extent>
+							<gmd:geographicElement>
+								<xsl:apply-templates select="//*:geographicElement/gmd:EX_GeographicDescription" />
+							</gmd:geographicElement>
+							<gmd:geographicElement>
+								<xsl:apply-templates select="//*:geographicElement/gmd:EX_GeographicBoundingBox" />
+							</gmd:geographicElement>
+							<gmd:temporalElement>
+								<xsl:apply-templates select="//*:temporalElement/child::*" />
+							</gmd:temporalElement>
+						</gmd:EX_Extent>
 					</srv:extent>
 					<xsl:apply-templates select="//srv:couplingType" />
 					<xsl:apply-templates select="//srv:containsOperations" />
@@ -170,7 +180,17 @@
 					<xsl:apply-templates select="//gmd:language" />
 					<xsl:apply-templates select="//gmd:characterSet" />
 					<gmd:extent>
-						<xsl:apply-templates select="//*:extent/child::*" />
+						<gmd:EX_Extent>
+							<gmd:geographicElement>
+								<xsl:apply-templates select="//*:geographicElement/gmd:EX_GeographicDescription" />
+							</gmd:geographicElement>
+							<gmd:geographicElement>
+								<xsl:apply-templates select="//*:geographicElement/gmd:EX_GeographicBoundingBox" />
+							</gmd:geographicElement>
+							<gmd:temporalElement>
+								<xsl:apply-templates select="//*:temporalElement/child::*" />
+							</gmd:temporalElement>
+						</gmd:EX_Extent>
 					</gmd:extent>
 				</gmd:MD_DataIdentification>
 			</xsl:otherwise>
