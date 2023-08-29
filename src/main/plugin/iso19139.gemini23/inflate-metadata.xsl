@@ -243,7 +243,7 @@
         <!-- Add srv:serviceType if missing -->
         <xsl:if test="not(srv:serviceType)">
           <srv:serviceType>
-            <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco" codeSpace="INSPIRE"></gco:LocalName>
+            <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco" codeSpace="INSPIRE">view</gco:LocalName>
          </srv:serviceType>
          </xsl:if>
         <!-- add extents of all kinds if missing -->
