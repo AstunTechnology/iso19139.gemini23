@@ -594,64 +594,11 @@
             xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:status">
           </field>
 
-          <!-- <field name="pointOfContact"
-                 xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:pointOfContact"
-                 or="pointOfContact"
-                 in="/gmd:MD_Metadata/gmd:identificationInfo/*"
-                 del="."/> -->
-
-          <!-- <action type="add" name="pointOfContact" btnLabel="addContact"
-                  addDirective="data-gn-directory-entry-selector"
-                  or="pointOfContact"
-                  in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification">
-            <directiveAttributes
-              data-template-add-action="true"
-              data-template-type="contact"
-              data-search-action="true"
-              data-popup-action="true"
-              data-element-name="gmd:pointOfContact"
-              data-variables="gmd:role/gmd:CI_RoleCode/@codeListValue~{role}"/>
-          </action> -->
-
-          
-
-          <!-- <text ref="responsibleparty_help" if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0"/>
-
-          <field
-            xpath="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:pointOfContact"
-            if="count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification) > 0">
-          </field> -->
-
-          <section name="gmd:pointOfContact">
-            <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:pointOfContact/*/gmd:individualName"  or="individualName"  in="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:pointOfContact/*" />
-            <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:pointOfContact/*/gmd:organisationName"  or="organisationName" in="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:pointOfContact/*"/>
-            <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:pointOfContact/*/gmd:positionName"  or="positionName" in="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:pointOfContact/*"/>
-            <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:pointOfContact/*/gmd:contactInfo/*/gmd:phone/*/gmd:voice"  or="voice" in="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:pointOfContact/*/gmd:contactInfo/*/gmd:phone/*" del="../.."/>
-            <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:pointOfContact/*/gmd:contactInfo/*/gmd:address/*/gmd:deliveryPoint"  or="deliveryPoint" in="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:pointOfContact/*/gmd:contactInfo/*/gmd:address/*"/>
-            <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:pointOfContact/*/gmd:contactInfo/*/gmd:address/*/gmd:city"  or="city" in="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:pointOfContact/*/gmd:contactInfo/*/gmd:address/*"/>
-            <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:pointOfContact/*/gmd:contactInfo/*/gmd:address/*/gmd:administrativeArea"  or="administrativeArea" in="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:pointOfContact/*/gmd:contactInfo/*/gmd:address/*"/>
-            <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:pointOfContact/*/gmd:contactInfo/*/gmd:address/*/gmd:postalCode"  or="postalCode" in="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:pointOfContact/*/gmd:contactInfo/*/gmd:address/*"/>
-            <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:pointOfContact/*/gmd:contactInfo/*/gmd:address/*/gmd:country"  or="country" in="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:pointOfContact/*/gmd:contactInfo/*/gmd:address/*"/>
-            <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:pointOfContact/*/gmd:contactInfo/*/gmd:address/*/gmd:electronicMailAddress"  or="electronicMailAddress" in="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:pointOfContact/*/gmd:contactInfo/*/gmd:address/*"/>
-            <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:pointOfContact/*/gmd:role"  or="role" in="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:pointOfContact/*"/>
-          </section>
-
-          <!-- <action type="add" name="pointOfContact" btnLabel="addContact"
-            addDirective="data-gn-directory-entry-selector"
-            or="pointOfContact"
-            in="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification">
-            <directiveAttributes
-              data-template-add-action="true"
-              data-template-type="contact"
-              data-search-action="true"
-              data-popup-action="true"
-              data-element-name="gmd:pointOfContact"
-              data-variables="gmd:role/gmd:CI_RoleCode/@codeListValue~{role}"/>
-          </action> -->
-
-
-
+          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:pointOfContact" or="pointOfContact" in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification" if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0"/>
+          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:pointOfContact" or="pointOfContact" in="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification" if="count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification) > 0"/>
           <text ref="responsiblepartysrv_help" if="count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification) > 0"/>
+          <text ref="responsibleparty_help" if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0"/>
+
 
           <field
             xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:resourceMaintenance" if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0">
