@@ -1119,6 +1119,7 @@
             <field xpath="/gmd:MD_Metadata/gmd:contact/*/gmd:contactInfo/*/gmd:address/*/gmd:country"  or="country" in="/gmd:MD_Metadata/gmd:contact/*/gmd:contactInfo/*/gmd:address/*"/>
             <field xpath="/gmd:MD_Metadata/gmd:contact/*/gmd:contactInfo/*/gmd:address/*/gmd:electronicMailAddress"  or="electronicMailAddress" in="/gmd:MD_Metadata/gmd:contact/*/gmd:contactInfo/*/gmd:address/*"/>
             <field xpath="/gmd:MD_Metadata/gmd:contact/*/gmd:role"  or="role" in="/gmd:MD_Metadata/gmd:contact/*"/>
+            <field xpath="/gmd:MD_Metadata/gmd:contact" or="contact" in="/gmd:MD_Metadata" if="count(gmd:MD_Metadata/gmd:contact) = 0"/>
           </section>
           <text ref="metadatacontact_help" if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0"/>
           <text ref="metadatacontactsrv_help" if="count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification) > 0"/>
