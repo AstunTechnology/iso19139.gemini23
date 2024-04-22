@@ -5,10 +5,11 @@
   2010-11-15
   
   This stylesheet is designed to tranform ESRI ISO metadata produced
-  by ESRI ArcCatalog to the GEMINI 2.1 discovery metadata standard. 
+  by ESRI ArcCatalog to the GEMINI 2.3 discovery metadata standard. 
   
   2011-02-07 - Support for service metadata
   2014-12-01 - Port to gemini22 schema plugin (Emanuele Tajariol AT GeoSolutions)
+  2024-04-22 - Port to gemini23 schema plugin (Jo Cook AT Astun Technology)
 
 -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
