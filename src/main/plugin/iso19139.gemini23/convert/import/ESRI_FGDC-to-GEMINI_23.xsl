@@ -9,6 +9,7 @@
   
   2011-02-07 - Support for service metadata
   2014-12-01 - Port to gemini22 schema plugin (Emanuele Tajariol AT GeoSolutions)
+  2024-06-19 - Port to gemini23 schema plugin (Jo Cook AT Astun Technology)
 
 -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
@@ -197,7 +198,7 @@
                     </xsl:element>
                 </xsl:for-each>
             </xsl:when>
-            <xsl:when test="count($FgdcElement)!=0 and contains($FgdcElement/cntinfo/cntorgp/cntorg,'REQUIRED:')=false">
+            <!--<xsl:when test="count($FgdcElement)!=0 and contains($FgdcElement/cntinfo/cntorgp/cntorg,'REQUIRED:')=false">
                 <xsl:for-each select="$FgdcElement">
                     <xsl:element name="gmd:contact" namespace="http://www.isotc211.org/2005/gmd">
                         <xsl:call-template name="CI_ResponsibleParty">
@@ -208,7 +209,7 @@
                         </xsl:call-template>
                     </xsl:element>
                 </xsl:for-each>
-            </xsl:when>
+            </xsl:when>-->
         </xsl:choose>
     </xsl:template>
     <!-- ========================================================================== -->
@@ -337,11 +338,6 @@
                 <xsl:with-param name="IsoElement" select="./dataIdInfo/idCitation/citRespParty" />
                 <xsl:with-param name="FgdcElement" select="./idinfo/ptcontac/cntinfo" />
             </xsl:call-template>
-            <!-- Distributor Contact -->
-            <xsl:call-template name="responsibleOrganisation">
-                <xsl:with-param name="IsoElement" select="./distInfo/distributor/distorCont" />
-                <xsl:with-param name="FgdcElement" select="./distinfo/distrib/cntinfo" />
-            </xsl:call-template>
             <!-- Maintenance and Update Frequency -->
             <xsl:call-template name="frequencyOfUpdate"/>
             <!-- Resource Format -->
@@ -375,12 +371,7 @@
             <xsl:call-template name="abstract"/>
             <!-- Responsible organisation -->
             <xsl:call-template name="responsibleOrganisation">
-                <xsl:with-param name="IsoElement" select="./dataIdInfo/idCitation/citRespParty" />
-                <xsl:with-param name="FgdcElement" select="./idinfo/ptcontac/cntinfo" />
-            </xsl:call-template>
-            <!-- Distributor Contact -->
-            <xsl:call-template name="responsibleOrganisation">
-                <xsl:with-param name="IsoElement" select="./distInfo/distributor/distorCont" />
+                <xsl:with-param name="IsoElement" select="./dataIdInfo/idPoC" />
                 <xsl:with-param name="FgdcElement" select="./idinfo/ptcontac/cntinfo" />
             </xsl:call-template>
             <!-- Maintenance and Update Frequency -->
@@ -473,17 +464,36 @@
                 <!-- Unique resource identifier -->
                 <xsl:if test="$resourceType='dataset'">
                     <xsl:comment>Unique resource identifier</xsl:comment>
-                    <xsl:element name="gmd:identifier" namespace="http://www.isotc211.org/2005/gmd">
-                        <xsl:element name="gmd:MD_Identifier" namespace="http://www.isotc211.org/2005/gmd">
-                            <xsl:element name="gmd:code" namespace="http://www.isotc211.org/2005/gmd">
-                                <xsl:call-template name="CharacterString">
-                                    <xsl:with-param name="value">
-                                        <xsl:text/>
-                                    </xsl:with-param>
-                                </xsl:call-template>
+                    <xsl:choose>
+                    <xsl:when test="count($isoCitation/citId) > 0">
+                        <xsl:for-each select="$isoCitation/citId">
+                            <xsl:element name="gmd:identifier" namespace="http://www.isotc211.org/2005/gmd">
+                                <xsl:element name="gmd:MD_Identifier" namespace="http://www.isotc211.org/2005/gmd">
+                                    <xsl:element name="gmd:code" namespace="http://www.isotc211.org/2005/gmd">
+                                        <xsl:call-template name="CharacterString">
+                                            <xsl:with-param name="value">
+                                                <xsl:value-of select="$isoCitation/citId/identCode"/>
+                                        </xsl:with-param>
+                                    </xsl:call-template>
+                                </xsl:element>
                             </xsl:element>
                         </xsl:element>
-                    </xsl:element>
+                        </xsl:for-each>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:element name="gmd:identifier" namespace="http://www.isotc211.org/2005/gmd">
+                            <xsl:element name="gmd:MD_Identifier" namespace="http://www.isotc211.org/2005/gmd">
+                                <xsl:element name="gmd:code" namespace="http://www.isotc211.org/2005/gmd">
+                                    <xsl:call-template name="CharacterString">
+                                        <xsl:with-param name="value">
+                                            <xsl:text/>
+                                        </xsl:with-param>
+                                    </xsl:call-template>
+                                </xsl:element>
+                            </xsl:element>
+                        </xsl:element>
+                    </xsl:otherwise>
+                 </xsl:choose>
                 </xsl:if>
                 <xsl:for-each select="$isoCitation/presForm/PresFormCd">
                     <xsl:element name="gmd:presentationForm" namespace="http://www.isotc211.org/2005/gmd">
@@ -516,11 +526,11 @@
                         <xsl:with-param name="value" select="./dataIdInfo/idAbs" />
                     </xsl:call-template>
                 </xsl:when>
-                <xsl:when test="count(./idinfo/descript/abstract)!=0 and contains(./idinfo/descript/abstract,'REQUIRED:')=false">
+                <!--<xsl:when test="count(./idinfo/descript/abstract)!=0 and contains(./idinfo/descript/abstract,'REQUIRED:')=false">
                     <xsl:call-template name="CharacterString">
                         <xsl:with-param name="value" select="./idinfo/descript/abstract" />
                     </xsl:call-template>
-                </xsl:when>
+                </xsl:when>-->
                 <xsl:otherwise>
                     <xsl:call-template name="CharacterString">
                         <xsl:with-param name="value">
@@ -548,7 +558,7 @@
                     </xsl:element>
                 </xsl:for-each>
             </xsl:when>
-            <xsl:when test="count($FgdcElement)!=0 and contains($FgdcElement/cntinfo/cntorgp/cntorg,'REQUIRED:')=false">
+            <!--<xsl:when test="count($FgdcElement)!=0 and contains($FgdcElement/cntinfo/cntorgp/cntorg,'REQUIRED:')=false">
                 <xsl:for-each select="$FgdcElement">
                     <xsl:element name="gmd:pointOfContact" namespace="http://www.isotc211.org/2005/gmd">
                         <xsl:call-template name="CI_ResponsibleParty">
@@ -556,7 +566,7 @@
                         </xsl:call-template>
                     </xsl:element>
                 </xsl:for-each>
-            </xsl:when>
+            </xsl:when>-->
         </xsl:choose>
     </xsl:template>
     <!-- ========================================================================== -->
@@ -606,7 +616,7 @@
                                 </xsl:call-template>
                             </xsl:element>
                         </xsl:when>
-                        <!-- FGDC uses same update list as ISO but encodes with capitalised start. Translates to all lower case to be iso compatible -->
+                        <!--<!-\- FGDC uses same update list as ISO but encodes with capitalised start. Translates to all lower case to be iso compatible -\->
                         <xsl:when test="count(./idinfo/status/update)!=0 and contains(./idinfo/status/update,'REQUIRED:')=false">
                             <xsl:element name="gmd:MD_MaintenanceFrequencyCode" namespace="http://www.isotc211.org/2005/gmd">
                                 <xsl:call-template name="CodeListAttributes">
@@ -618,7 +628,7 @@
                                     </xsl:with-param>
                                 </xsl:call-template>
                             </xsl:element>
-                        </xsl:when>
+                        </xsl:when>-->
                         <xsl:otherwise>
                             <xsl:element name="gmd:MD_MaintenanceFrequencyCode" namespace="http://www.isotc211.org/2005/gmd">
                                 <xsl:call-template name="CodeListAttributes">
@@ -641,18 +651,18 @@
     <!-- ========================================================================== -->
     <xsl:template name="dataFormat">
         <xsl:choose>
-            <xsl:when test="count(./distInfo/distributor/distorFormat/formatName)!=0">
+            <xsl:when test="count(./distInfo/distFormat/formatName)!=0">
                 <xsl:comment>Data Format</xsl:comment>
                 <xsl:element name="gmd:resourceFormat" namespace="http://www.isotc211.org/2005/gmd">
                     <xsl:element name="gmd:MD_Format" namespace="http://www.isotc211.org/2005/gmd">
                         <xsl:element name="gmd:name" namespace="http://www.isotc211.org/2005/gmd">
                             <xsl:call-template name="CharacterString">
-                                <xsl:with-param name="value" select="./distInfo/distributor/distorFormat/formatName" />
+                                <xsl:with-param name="value" select="./distInfo/distFormat/formatName" />
                             </xsl:call-template>
                         </xsl:element>
                         <xsl:element name="gmd:version" namespace="http://www.isotc211.org/2005/gmd">
                             <xsl:call-template name="CharacterString">
-                                <xsl:with-param name="value" select="./distInfo/distributor/distorFormat/formatVer" />
+                                <xsl:with-param name="value" select="./distInfo/distFormat/formatVer" />
                             </xsl:call-template>
                         </xsl:element>
                     </xsl:element>
@@ -685,101 +695,98 @@
     <!-- Keyword                                                                    -->
     <!-- ========================================================================== -->
     <xsl:template name="keyword">
-        <xsl:comment>Keyword</xsl:comment>
             <xsl:choose>
-            <!-- KeyTypCode = 002: Place keywords output as Extent -->
-            <xsl:when test="count(./dataIdInfo/descKeys[@KeyTypCd != '002']) != 0">
-                <xsl:for-each select="./dataIdInfo/descKeys[@KeyTypCd != '002']">
+            <xsl:when test="count(./dataIdInfo/themeKeys) != 0">
+                <xsl:for-each select="./dataIdInfo/themeKeys">
+                    <xsl:comment>Controlled Text Keywords</xsl:comment>
                     <xsl:element name="gmd:descriptiveKeywords" namespace="http://www.isotc211.org/2005/gmd">
                         <xsl:element name="gmd:MD_Keywords" namespace="http://www.isotc211.org/2005/gmd">
-                            <xsl:choose>
-                                <xsl:when test="count(./keyword)!=0">
-                                    <xsl:for-each select="./keywords/theme/themekey">
-                                        <xsl:element name="gmd:keyword" namespace="http://www.isotc211.org/2005/gmd">
-                                            <xsl:call-template name="CharacterString">
-                                                <xsl:with-param name="value" select="." />
-                                            </xsl:call-template>
-                                        </xsl:element>
-                                    </xsl:for-each>
-                                </xsl:when>
-                                <xsl:otherwise>
+                                <xsl:for-each select="./keyword">
                                     <xsl:element name="gmd:keyword" namespace="http://www.isotc211.org/2005/gmd">
                                         <xsl:call-template name="CharacterString">
-                                            <xsl:with-param name="value">
-                                                <xsl:text/>
-                                            </xsl:with-param>
+                                            <xsl:with-param name="value" select="."/>
                                         </xsl:call-template>
                                     </xsl:element>
-                                </xsl:otherwise>
-                            </xsl:choose>
-                            <xsl:choose>
-                                <xsl:when test="count(./thesaName) = 1">
-                                    <xsl:element name="gmd:thesaurusName" namespace="http://www.isotc211.org/2005/gmd">
-                                        <xsl:choose>
-                                            <xsl:when test="count(./thesaName/resTitle)!=0">
-                                                <xsl:element name="gmd:CI_Citation" namespace="http://www.isotc211.org/2005/gmd">
-                                                    <xsl:element name="gmd:title" namespace="http://www.isotc211.org/2005/gmd">
-                                                        <xsl:choose>
-                                                            <xsl:when test="count(./thesaName/resTitle)!=0">
-                                                                <xsl:call-template name="CharacterString">
-                                                                    <xsl:with-param name="value" select="./thesaName/resTitle" />
-                                                                </xsl:call-template>
-                                                            </xsl:when>
-                                                            <xsl:otherwise>
-                                                                <xsl:call-template name="CharacterString">
-                                                                    <xsl:with-param name="value">
-                                                                        <xsl:text/>
-                                                                    </xsl:with-param>
-                                                                </xsl:call-template>
-                                                            </xsl:otherwise>
-                                                        </xsl:choose>
-                                                    </xsl:element>
-                                                    <xsl:choose>
-                                                        <xsl:when test="count(./thesaName/resRefDate)!=0">
-                                                            <xsl:for-each select="./thesaName/resRefDate">
-                                                                <xsl:element name="gmd:date" namespace="http://www.isotc211.org/2005/gmd">
-                                                                    <xsl:call-template name="CI_Date">
-                                                                        <xsl:with-param name="date" select="./refDate" />
-                                                                        <xsl:with-param name="type" select="./refDateType/DateTypCd/@value" />
-                                                                    </xsl:call-template>
-                                                                </xsl:element>
-                                                            </xsl:for-each>
-                                                        </xsl:when>
-                                                        <xsl:otherwise>
-                                                            <xsl:element name="gmd:date" namespace="http://www.isotc211.org/2005/gmd">
-                                                                <xsl:call-template name="CI_Date">
-                                                                    <xsl:with-param name="date">
-                                                                        <xsl:text/>
-                                                                    </xsl:with-param>
-                                                                    <xsl:with-param name="type">
-                                                                        <xsl:text/>
-                                                                    </xsl:with-param>
-                                                                </xsl:call-template>
-                                                            </xsl:element>
-                                                        </xsl:otherwise>
-                                                    </xsl:choose>
-                                                </xsl:element>
-                                            </xsl:when>
-                                        </xsl:choose>
-                                    </xsl:element>
-                                </xsl:when>
-                            </xsl:choose>
-                        </xsl:element>
+                                </xsl:for-each>
+                            <xsl:element name="gmd:type" namespace="http://www.isotc211.org/2005/gmd">
+                                <xsl:comment>No theme type provided</xsl:comment>
+                                <xsl:call-template name="CharacterString">
+                                    <xsl:with-param name="value">
+                                        <xsl:text>theme</xsl:text>
+                                    </xsl:with-param>
+                                </xsl:call-template>
+                            </xsl:element>
+                         <xsl:element name="gmd:thesaurusName" namespace="http://www.isotc211.org/2005/gmd">
+                             <xsl:choose>
+                                 <xsl:when test="count(./thesaName/resTitle)!=0">
+                                     <xsl:element name="gmd:CI_Citation" namespace="http://www.isotc211.org/2005/gmd">
+                                         <xsl:element name="gmd:title" namespace="http://www.isotc211.org/2005/gmd">
+                                             <xsl:choose>
+                                                 <xsl:when test="count(./thesaName/resTitle)!=0">
+                                                     <xsl:call-template name="CharacterString">
+                                                         <xsl:with-param name="value" select="./thesaName/resTitle" />
+                                                     </xsl:call-template>
+                                                 </xsl:when>
+                                                 <xsl:otherwise>
+                                                     <xsl:call-template name="CharacterString">
+                                                         <xsl:with-param name="value">
+                                                             <xsl:text/>
+                                                         </xsl:with-param>
+                                                     </xsl:call-template>
+                                                 </xsl:otherwise>
+                                             </xsl:choose>
+                                         </xsl:element>
+                                         <xsl:choose>
+                                             <xsl:when test="count(./thesaName/date)!=0">
+                                                 <xsl:for-each select="./thesaName/date">
+                                                     <xsl:element name="gmd:date" namespace="http://www.isotc211.org/2005/gmd">
+                                                         <xsl:call-template name="CI_Date">
+                                                             <xsl:with-param name="date" select="substring(./pubDate,1,10)" />
+                                                             <xsl:with-param name="type">
+                                                                <xsl:text>publication</xsl:text>
+                                                            </xsl:with-param>
+                                                         </xsl:call-template>
+                                                     </xsl:element>
+                                                 </xsl:for-each>
+                                             </xsl:when>
+                                             <xsl:otherwise>
+                                                 <xsl:element name="gmd:date" namespace="http://www.isotc211.org/2005/gmd">
+                                                     <xsl:call-template name="CI_Date">
+                                                         <xsl:with-param name="date">
+                                                             <xsl:text/>
+                                                         </xsl:with-param>
+                                                         <xsl:with-param name="type">
+                                                             <xsl:text/>
+                                                         </xsl:with-param>
+                                                     </xsl:call-template>
+                                                 </xsl:element>
+                                             </xsl:otherwise>
+                                         </xsl:choose>
+                                         <xsl:element name="gmd:identifier" namespace="http://www.isotc211.org/2005/gmd">
+                                             <xsl:element name="gmd:MD_Identifier" namespace="http://www.isotc211.org/2005/gmd">
+                                                 <xsl:element name="gmd:code" namespace="http://www.isotc211.org/2005/gmd">
+                                                     <xsl:element name="gmx:Anchor" namespace="http://www.isotc211.org/2005/gmd">
+                                                     <xsl:variable name="identifier">
+                                                        <xsl:call-template name="thesIdent">
+                                                            <xsl:with-param name="thesName" select="(./thesaName/resTitle)"/>
+                                                         </xsl:call-template>
+                                                        </xsl:variable>
+                                                        <xsl:attribute name="xlink:href">
+                                                            <xsl:value-of select="concat('http://localhost/geonetwork/srv/api/registries/vocabularies/',$identifier)"/>
+                                                        </xsl:attribute>
+                                                        <xsl:value-of select="concat('geonetwork.thesaurus.',$identifier)"/>
+                                                     </xsl:element>
+                                                 </xsl:element>
+                                             </xsl:element>
+                                         </xsl:element>
+                                      </xsl:element>
+                                 </xsl:when>
+                             </xsl:choose>
+                         </xsl:element>
+                    </xsl:element>
                     </xsl:element>
                 </xsl:for-each>
             </xsl:when>
-            <xsl:otherwise>
-                <xsl:comment>INSPIRE keywords</xsl:comment>
-                <xsl:element name="gmd:descriptiveKeywords" namespace="http://www.isotc211.org/2005/gmd">
-                    <xsl:element name="gmd:MD_Keywords" namespace="http://www.isotc211.org/2005/gmd">
-                        <xsl:element name="gmd:keyword" namespace="http://www.isotc211.org/2005/gmd">
-                            <xsl:call-template name="CharacterString">
-                                <xsl:with-param name="value" select="./idinfo/keywords/theme/themekey"/>
-                            </xsl:call-template>
-                        </xsl:element>
-                    </xsl:element>
-                  </xsl:element>
-            </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
     <!-- ========================================================================== -->
@@ -809,7 +816,7 @@
                             </xsl:element>
                         </xsl:for-each>
                     </xsl:when>
-                    <xsl:when test="count(./idinfo/accconst)!=0 and contains(./idinfo/accconst,'REQUIRED:')=false">
+                    <!--<xsl:when test="count(./idinfo/accconst)!=0 and contains(./idinfo/accconst,'REQUIRED:')=false">
                         <xsl:for-each select="./idinfo/accconst">
                             <xsl:element name="gmd:accessConstraints">
                                 <xsl:element name="gmd:MD_RestrictionCode" namespace="http://www.isotc211.org/2005/gmd">
@@ -822,7 +829,7 @@
                                 </xsl:element>
                             </xsl:element>
                         </xsl:for-each>
-                    </xsl:when>
+                    </xsl:when>-->
                 </xsl:choose>
                 <xsl:if test="count(./dataIdInfo/resConst/LegConsts/accessConsts/RestrictCd[@value='008']) = 0">
                     <xsl:element name="gmd:accessConstraints">
@@ -1017,7 +1024,7 @@
                     </xsl:call-template>
                 </xsl:element>
             </xsl:when>
-            <xsl:when test="count($FgdcLangCode[@Sync='TRUE'])!=0 and contains($FgdcLangCode,'REQUIRED:')=false">
+            <!--<xsl:when test="count($FgdcLangCode[@Sync='TRUE'])!=0 and contains($FgdcLangCode,'REQUIRED:')=false">
                 <xsl:comment>
                     <xsl:value-of select="$GeminiItemName"/>
                 </xsl:comment>
@@ -1030,7 +1037,7 @@
                         </xsl:with-param>
                     </xsl:call-template>
                 </xsl:element>
-            </xsl:when>
+            </xsl:when>-->
             <xsl:otherwise>
                 <xsl:comment>Metadata language not found. Defaulted to "eng"</xsl:comment>
                 <xsl:element name="gmd:language" namespace="http://www.isotc211.org/2005/gmd">
@@ -1191,7 +1198,7 @@
     <!-- Geographic bounding box                                                    -->
     <!-- ========================================================================== -->
     <xsl:template name="geographicBoundingBox">
-        <xsl:variable name="IsoGeoBox" select="./dataIdInfo/geoBox" />
+        <xsl:variable name="IsoGeoBox" select="./dataIdInfo/dataExt/geoEle/GeoBndBox" />
         <xsl:comment>Geographic bounding box</xsl:comment>
         <xsl:element name="gmd:geographicElement" namespace="http://www.isotc211.org/2005/gmd">
             <xsl:element name="gmd:EX_GeographicBoundingBox" namespace="http://www.isotc211.org/2005/gmd">
@@ -1343,13 +1350,13 @@
                     </xsl:call-template>
                 </xsl:element>
             </xsl:when>
-            <xsl:when test="count(./idinfo/descript/supplinf) > 0 and contains(./idinfo/descript/supplinf,'REQUIRED:')=false">
+            <!--<xsl:when test="count(./idinfo/descript/supplinf) > 0 and contains(./idinfo/descript/supplinf,'REQUIRED:')=false">
                 <xsl:element name="gmd:supplementalInformation" namespace="http://www.isotc211.org/2005/gmd">
                     <xsl:call-template name="CharacterString">
                         <xsl:with-param name="value" select="./idinfo/descript/supplinf"/>
                     </xsl:call-template>
                 </xsl:element>
-            </xsl:when>
+            </xsl:when>-->
         </xsl:choose>
     </xsl:template>
     <!-- ========================================================================== -->
@@ -1360,67 +1367,13 @@
             <xsl:when test="count(distInfo) > 0">
                 <xsl:element name="gmd:distributionInfo" namespace="http://www.isotc211.org/2005/gmd">
                     <xsl:element name="gmd:MD_Distribution" namespace="http://www.isotc211.org/2005/gmd">
+                        <xsl:for-each select="distInfo/distFormat">
                         <xsl:element name="gmd:distributionFormat" namespace="http://www.isotc211.org/2005/gmd">
-                            <xsl:call-template name="MD_Format"/>
+                            <xsl:call-template name="MD_Format">
+                                <xsl:with-param name="name" select="./formatName" />
+                                <xsl:with-param name="version" select="./formatVer" />
+                            </xsl:call-template>
                         </xsl:element>
-                        <xsl:for-each select="distInfo/distributor">
-                            <xsl:element name="gmd:distributor" namespace="http://www.isotc211.org/2005/gmd">
-                                <xsl:element name="gmd:MD_Distributor" namespace="http://www.isotc211.org/2005/gmd">
-                                    <xsl:for-each select="distorCont">
-                                        <xsl:element name="gmd:distributorContact" namespace="http://www.isotc211.org/2005/gmd">
-                                            <xsl:call-template name="CI_ResponsibleParty">
-                                                <xsl:with-param name="value" select="."/>
-                                            </xsl:call-template>
-                                        </xsl:element>
-                                    </xsl:for-each>
-                                    <xsl:for-each select="distorOrdPrc">
-                                        <xsl:element name="gmd:distributionOrderProcess" namespace="http://www.isotc211.org/2005/gmd">
-                                            <xsl:element name="gmd:MD_StandardOrderProcess" namespace="http://www.isotc211.org/2005/gmd">
-                                                <xsl:if test="count(resFees) = 1">
-                                                    <xsl:element name="gmd:fees" namespace="http://www.isotc211.org/2005/gmd">
-                                                        <xsl:call-template name="CharacterString">
-                                                            <xsl:with-param name="value" select="resFees"/>
-                                                        </xsl:call-template>
-                                                    </xsl:element>
-                                                </xsl:if>
-                                                <xsl:if test="count(ordInstr) = 1">
-                                                    <xsl:element name="gmd:orderingInstructions" namespace="http://www.isotc211.org/2005/gmd">
-                                                        <xsl:call-template name="CharacterString">
-                                                            <xsl:with-param name="value" select="ordInstr"/>
-                                                        </xsl:call-template>
-                                                    </xsl:element>
-                                                </xsl:if>
-                                                <xsl:if test="count(ordTurn) = 1">
-                                                    <xsl:element name="gmd:turnaround" namespace="http://www.isotc211.org/2005/gmd">
-                                                        <xsl:call-template name="CharacterString">
-                                                            <xsl:with-param name="value" select="ordTurn"/>
-                                                        </xsl:call-template>
-                                                    </xsl:element>
-                                                </xsl:if>
-                                            </xsl:element>
-                                        </xsl:element>
-                                    </xsl:for-each>
-                                    <xsl:for-each select="distorFormat">
-                                        <xsl:element name="gmd:distributorFormat" namespace="http://www.isotc211.org/2005/gmd">
-                                            <xsl:call-template name="MD_Format">
-                                                <xsl:with-param name="name" select="formatName"/>
-                                                <xsl:with-param name="version" select="formatVer"/>
-                                            </xsl:call-template>
-                                        </xsl:element>
-                                    </xsl:for-each>
-                                    <xsl:if test="count(distorFormat) = 0">
-                                        <xsl:call-template name="MD_Format"/>
-                                    </xsl:if>
-                                    <!-- Distributor Transfer Options -->
-                                    <xsl:for-each select="distorTran">
-                                        <xsl:element name="gmd:distributorTransferOptions" namespace="http://www.isotc211.org/2005/gmd">
-                                            <xsl:call-template name="MD_DigitalTransferOptions">
-                                                <xsl:with-param name="distorTran" select="."/>
-                                            </xsl:call-template>
-                                        </xsl:element>
-                                    </xsl:for-each>
-                                </xsl:element>
-                            </xsl:element>
                         </xsl:for-each>
                         <xsl:for-each select="distInfo/*/distorTran">
                             <xsl:element name="gmd:transferOptions" namespace="http://www.isotc211.org/2005/gmd">
@@ -1824,10 +1777,8 @@
     <!-- ========================================================================== -->
     <xsl:template name="MD_Format">
         <xsl:param name="name">
-            <xsl:text>Unknown</xsl:text>
         </xsl:param>
         <xsl:param name="version">
-            <xsl:text>Unknown</xsl:text>
         </xsl:param>
         <xsl:element name="gmd:MD_Format" namespace="http://www.isotc211.org/2005/gmd">
             <xsl:element name="gmd:name" namespace="http://www.isotc211.org/2005/gmd">
@@ -1874,9 +1825,13 @@
     <!-- Write gmx:Anchor elements                                         -->
     <!-- ========================================================================== -->
     <xsl:template name="Anchor">
+        <xsl:param name="href" />
         <xsl:param name="value" />
         <xsl:element name="gmx:Anchor" namespace="http://www.isotc211.org/2005/gmx">
-            <xsl:value-of select="$value" />
+            <xsl:attribute name="xlink:href">
+                <xsl:value-of select="$href"/>
+            </xsl:attribute>
+            <xsl:value-of select="$value"/>
         </xsl:element>
     </xsl:template>
     <!-- ========================================================================== -->
@@ -1884,9 +1839,23 @@
     <!-- ========================================================================== -->
     <xsl:template name="CharacterString">
         <xsl:param name="value" />
-        <xsl:element name="gco:CharacterString" namespace="http://www.isotc211.org/2005/gco">
-            <xsl:value-of select="$value" />
-        </xsl:element>
+        <xsl:choose>
+            <xsl:when test="contains($value, 'href')">
+                <xsl:variable name="url">
+                    <xsl:value-of select='substring-before(substring-after($value, "href=&apos;"), "&apos;")' />
+                </xsl:variable>
+                <xsl:element name="gco:CharacterString" namespace="http://www.isotc211.org/2005/gco">
+                    <xsl:value-of select="substring-before($value, '&lt;a href=')" />
+                    <xsl:value-of select="$url" />
+                    <xsl:value-of select="substring-after($value, '/a&gt;')" />
+                </xsl:element>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:element name="gco:CharacterString" namespace="http://www.isotc211.org/2005/gco">
+                    <xsl:value-of select="$value" />
+                </xsl:element>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
     <!-- ========================================================================== -->
     <!-- Write gco:Date elements                                                    -->
@@ -3536,8 +3505,31 @@
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
+    
     <!-- ============================================================ -->
-    <!--	 Convert Date from YYYYMMDD to YYYY-MM-DD/YYYY-MM/YYYY 	  -->
+    <!--	 Construct a URL for the thesaurus identifier        	  -->
+    <!-- ============================================================ -->
+
+    <xsl:template name="thesIdent">
+        <xsl:param name="thesName"/>
+        <xsl:choose>
+            <xsl:when test="$thesName='GEMET - INSPIRE themes, version 1.0'">
+                <xsl:text>external.theme.httpinspireeceuropaeutheme-theme</xsl:text>
+            </xsl:when>
+            <xsl:when test="$thesName='GEMET - Concepts, version 2.4'">
+                <xsl:text>external.theme.gemet</xsl:text>
+            </xsl:when>
+            <xsl:when test="$thesName='IPSV Subjects List'">
+                <xsl:text>external.theme.subjects</xsl:text>
+            </xsl:when>
+        </xsl:choose>
+    </xsl:template>
+
+
+
+
+    <!-- ============================================================ -->
+    <!--     Convert Date from YYYYMMDD to YYYY-MM-DD/YYYY-MM/YYYY    -->
     <!-- ============================================================ -->
     <xsl:template name="FormatDate">
         <xsl:param name="date" />
@@ -3545,7 +3537,7 @@
             <xsl:text/>
         </xsl:param>
         <xsl:choose>
-            <xsl:when test="string-length($time)=0">
+            <xsl:when test="string-length($time)=0">esriCode='001'
                 <xsl:choose>
                     <xsl:when test="string-length($date)=15">
                         <xsl:value-of select="concat(substring($date,1,4),'-',substring($date,5,2),'-',substring($date,7,2),'T',substring($date,10,2),':',substring($date,12,2),':',substring($date,14,2))" />
