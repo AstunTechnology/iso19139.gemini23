@@ -812,144 +812,52 @@
                                         </xsl:with-param>
                                     </xsl:call-template>
                                 </xsl:element>
-                                <!-- add gmd:otherconstraints for access limitations here -->
-                            </xsl:element>
-                        </xsl:for-each>
-                    </xsl:when>
-                    <!--<xsl:when test="count(./idinfo/accconst)!=0 and contains(./idinfo/accconst,'REQUIRED:')=false">
-                        <xsl:for-each select="./idinfo/accconst">
-                            <xsl:element name="gmd:accessConstraints">
-                                <xsl:element name="gmd:MD_RestrictionCode" namespace="http://www.isotc211.org/2005/gmd">
-                                    <xsl:call-template name="CodeListAttributes">
-                                        <xsl:with-param name="CodeList">
-                                            <xsl:text>MD_RestrictionCode</xsl:text>
-                                        </xsl:with-param>
-                                        <xsl:with-param name="CodeListValue" select="."/>
-                                    </xsl:call-template>
-                                </xsl:element>
-                            </xsl:element>
-                        </xsl:for-each>
-                    </xsl:when>-->
-                </xsl:choose>
-                <xsl:if test="count(./dataIdInfo/resConst/LegConsts/accessConsts/RestrictCd[@value='008']) = 0">
-                    <xsl:element name="gmd:accessConstraints">
-                        <xsl:element name="gmd:MD_RestrictionCode" namespace="http://www.isotc211.org/2005/gmd">
-                            <xsl:call-template name="CodeListAttributes">
-                                <xsl:with-param name="CodeList">
-                                    <xsl:text>MD_RestrictionCode</xsl:text>
-                                </xsl:with-param>
-                                <xsl:with-param name="CodeListValue">
-                                    <xsl:call-template name="GetConstraintCode">
-                                        <xsl:with-param name="esriCode">
-                                            <xsl:text>008</xsl:text>
-                                        </xsl:with-param>
-                                    </xsl:call-template>
-                                </xsl:with-param>
-                            </xsl:call-template>
-                        </xsl:element>
-                    </xsl:element>
-                </xsl:if>
-                <!-- this needs to be a separate legal constraints block -->
-                <xsl:for-each select="./dataIdInfo/resConst/LegConsts/useConsts">
-                    <xsl:element name="gmd:useConstraints">
-                        <xsl:element name="gmd:MD_RestrictionCode" namespace="http://www.isotc211.org/2005/gmd">
-                            <xsl:call-template name="CodeListAttributes">
-                                <xsl:with-param name="CodeList">
-                                    <xsl:text>MD_RestrictionCode</xsl:text>
-                                </xsl:with-param>
-                                <xsl:with-param name="CodeListValue">
-                                    <xsl:call-template name="GetConstraintCode">
-                                        <xsl:with-param name="esriCode" select="./RestrictCd/@value"/>
-                                    </xsl:call-template>
-                                </xsl:with-param>
-                            </xsl:call-template>
-                        </xsl:element>
-                    </xsl:element>
-                </xsl:for-each>
-                <xsl:choose>
-                    <xsl:when test="count(./dataIdInfo/resConst/LegConsts/othConsts) = 0">
-                        <xsl:element name="gmd:otherConstraints" namespace="http://www.isotc211.org/2005/gmd">
-                            <xsl:call-template name="CharacterString">
-                                <xsl:with-param name="value">
-                                    <xsl:text/>
-                                </xsl:with-param>
-                            </xsl:call-template>
-                        </xsl:element>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <xsl:for-each select="./dataIdInfo/resConst/LegConsts/othConsts">
+                               </xsl:element>
+                            <!-- add gmd:otherconstraints for access limitations here -->
                             <xsl:element name="gmd:otherConstraints" namespace="http://www.isotc211.org/2005/gmd">
                                 <xsl:call-template name="CharacterString">
-                                    <xsl:with-param name="value" select="."/>
+                                    <xsl:with-param name="value" select="../../../resConst/Consts/useLimit[1]" />
                                 </xsl:call-template>
                             </xsl:element>
                         </xsl:for-each>
-                    </xsl:otherwise>
+                    </xsl:when>
                 </xsl:choose>
             </xsl:element>
-                <xsl:element name="gmd:MD_LegalConstraints" namespace="http://www.isotc211.org/2005/gmd">
-                    <xsl:element name="gmd:useConstraints">
-                        <xsl:element name="gmd:MD_RestrictionCode" namespace="http://www.isotc211.org/2005/gmd">
-                            <xsl:call-template name="CodeListAttributes">
-                                <xsl:with-param name="CodeList">
-                                    <xsl:text>MD_RestrictionCode</xsl:text>
-                                </xsl:with-param>
-                                <xsl:with-param name="CodeListValue">
-                                    <xsl:call-template name="GetConstraintCode">
-                                        <xsl:with-param name="esriCode">
-                                            <xsl:text>008</xsl:text>
-                                        </xsl:with-param>
-                                    </xsl:call-template>
-                                </xsl:with-param>
-                            </xsl:call-template>
-                        </xsl:element>
-                    </xsl:element>
-                    <xsl:element name="gmd:otherConstraints" namespace="http://www.isotc211.org/2005/gmd">
-                        <xsl:choose>
-                            <xsl:when test="count(./dataIdInfo/resConst/Consts/useLimit)!=0">
-                                <xsl:call-template name="CharacterString">
-                                    <xsl:with-param name="value" select="./dataIdInfo/resConst/Consts/useLimit" />
-                                </xsl:call-template>
-                            </xsl:when>
-                            <xsl:otherwise>
-                                <xsl:call-template name="CharacterString">
-                                    <xsl:with-param name="value">
-                                        <xsl:text/>
-                                    </xsl:with-param>
-                                </xsl:call-template>
-                            </xsl:otherwise>
-                        </xsl:choose>
-                    </xsl:element>
-                </xsl:element>
-            
         </xsl:element>
-    </xsl:template>
-    <!-- ========================================================================== -->
-    <!-- Use constraints                                                            -->
-    <!-- ========================================================================== -->
-   <!-- <xsl:template name="useConstraints">
-        <xsl:comment>Use constraints</xsl:comment>
-        <xsl:element name="gmd:resourceConstraints" namespace="http://www.isotc211.org/2005/gmd">
-            <xsl:element name="gmd:MD_LegalConstraints" namespace="http://www.isotc211.org/2005/gmd">
-                <xsl:element name="gmd:useConstraints" namespace="http://www.isotc211.org/2005/gmd">
+        <xsl:comment>Use Constraints</xsl:comment>
+            <xsl:element name="gmd:resourceConstraints" namespace="http://www.isotc211.org/2005/gmd">
+                <xsl:element name="gmd:MD_LegalConstraints" namespace="http://www.isotc211.org/2005/gmd">
                     <xsl:choose>
-                        <xsl:when test="count(./dataIdInfo/resConst/Consts/useLimit)!=0">
-                            <xsl:call-template name="CharacterString">
-                                <xsl:with-param name="value" select="./dataIdInfo/resConst/Consts/useLimit" />
-                            </xsl:call-template>
+                        <xsl:when test="count(./dataIdInfo/resConst/LegConsts/useConsts)!=0">
+                            <xsl:for-each select="./dataIdInfo/resConst/LegConsts/useConsts">
+                                <xsl:element name="gmd:useConstraints">
+                                    <xsl:element name="gmd:MD_RestrictionCode" namespace="http://www.isotc211.org/2005/gmd">
+                                        <xsl:call-template name="CodeListAttributes">
+                                            <xsl:with-param name="CodeList">
+                                                <xsl:text>MD_RestrictionCode</xsl:text>
+                                            </xsl:with-param>
+                                            <xsl:with-param name="CodeListValue">
+                                                <xsl:call-template name="GetConstraintCode">
+                                                    <xsl:with-param name="esriCode" select="./RestrictCd/@value"/>
+                                                </xsl:call-template>
+                                            </xsl:with-param>
+                                        </xsl:call-template>
+                                    </xsl:element>
+                                </xsl:element>
+                                <!-- add gmd:otherconstraints for use Constraints here -->
+                                <xsl:element name="gmd:otherConstraints" namespace="http://www.isotc211.org/2005/gmd">
+                                    <xsl:call-template name="CharacterString">
+                                        <xsl:with-param name="value" select="../../../resConst/Consts/useLimit[2]" />
+                                    </xsl:call-template>
+                                </xsl:element>
+                            </xsl:for-each>
                         </xsl:when>
-                        <xsl:otherwise>
-                            <xsl:call-template name="CharacterString">
-                                <xsl:with-param name="value">
-                                    <xsl:text/>
-                                </xsl:with-param>
-                            </xsl:call-template>
-                        </xsl:otherwise>
                     </xsl:choose>
                 </xsl:element>
             </xsl:element>
-        </xsl:element>
-    </xsl:template>-->
+    </xsl:template>
+                
+
     <!-- ========================================================================== -->
     <!-- Spatial resolution                                                         -->
     <!-- ========================================================================== -->
