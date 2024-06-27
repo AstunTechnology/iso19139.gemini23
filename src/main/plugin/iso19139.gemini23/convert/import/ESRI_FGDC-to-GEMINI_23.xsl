@@ -790,7 +790,7 @@
         </xsl:choose>
     </xsl:template>
     <!-- ========================================================================== -->
-    <!-- Limitations on public access                                               -->
+    <!-- Constraints                                                                -->
     <!-- ========================================================================== -->
     <xsl:template name="limitationsOnPublicAccess">
         <xsl:comment>Limitations on public access</xsl:comment>
