@@ -2217,11 +2217,14 @@
     <description>Connection protocol to be used</description>
     <helper sort="true">
       <option value="ESRI:REST">ArcGIS REST Services</option>
+      <option value="ESRI:AIMS--http--configuration">ArcIMS Map Service Configuration File (*.AXL)</option>
+      <option value="ESRI:AIMS--http-get-feature">ArcIMS Internet Feature Map Service</option>
+      <option value="ESRI:AIMS--http-get-image">ArcIMS Internet Image Map Service</option>
       <option value="GLG:KML-2.0-http-get-map">Google Earth KML service (ver 2.0)</option>
-      <option value="OGC API - Coverages">OGC API - Coverages</option>
-      <option value="OGC API - Features">OGC API - Features</option>
-      <option value="OGC API - Maps">OGC API - Maps</option>
-      <option value="OGC API - Records">OGC API - Records</option>
+      <option value="OGC:API-coverages">OGC-API Coverages</option>
+      <option value="OGC:API-features">OGC-API Features</option>
+      <option value="OGC:API-maps">OGC-API Maps</option>
+      <option value="OGC:API-records">OGC-API Records</option>
       <option value="OGC:3DTILES">OGC-3DTiles Dataset</option>
       <option value="OGC:COG">OGC-Cloud Optimized GeoTIFF</option>
       <option value="OGC:CSW">OGC-CSW Catalogue Service for the Web</option>
@@ -2239,9 +2242,8 @@
       <option value="OGC:WCS-1.1.0-http-get-capabilities">OGC-WCS Web Coverage Service (ver 1.1.0)</option>
       <option value="OGC:WCTS">OGC-WCTS Web Coordinate Transformation Service</option>
       <option value="OGC:WFS">OGC-WFS Web Feature Service</option>
-      <option value="INSPIRE Atom">INSPIRE Atom</option>
       <option value="OGC:WFS-1.0.0-http-get-capabilities">OGC-WFS Web Feature Service (ver 1.0.0)</option>
-      <option value="OGC:WFS-G">OGC-WFS-G Gazzetteer Service</option>
+      <option value="OGC:WFS-G">OGC-WFS-G Gazetteer Service</option>
       <option value="OGC:WMC">OGC-WMC Web Map Context</option>
       <option value="OGC:WMS">OGC-WMS Web Map Service</option>
       <option value="OGC:WMS-1.1.1-http-get-capabilities">OGC-WMS Capabilities service (ver 1.1.1)</option>
@@ -2271,6 +2273,8 @@
       <option value="DB:ORACLE">ORACLE database table</option>
       <option value="WWW:LINK-1.0-http--opendap">OPeNDAP URL</option>
       <option value="RBNB:DATATURBINE">Data Turbine</option>
+      <option value="INSPIRE Atom">INSPIRE Atom</option>
+      <option value="GENERIC">Unknown Service Type</option>
       <option value="UKST">Unknown Service Type</option>
     </helper>
   </element>
