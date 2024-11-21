@@ -529,8 +529,8 @@
                       <gmd:linkage>
                         <gmd:URL>
                           <xsl:value-of select="gn-fn-sparql:getObject($root,
-                                            'http://purl.org/dc/terms/about',
-                                            $resourceUri)/@rdf:about"/>
+                                                'http://purl.org/dc/terms/title',
+                                                $resourceUri)/../@rdf:about"/>
                         </gmd:URL>
                       </gmd:linkage>
                       <gmd:protocol>
