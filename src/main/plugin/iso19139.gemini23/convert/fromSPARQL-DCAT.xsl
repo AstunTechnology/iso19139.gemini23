@@ -452,117 +452,111 @@
 
           <!-- distribution info -->
 
-          <xsl:variable name="distributions"
-                        select="gn-fn-sparql:getObject($root,
-                                                  'http://www.w3.org/ns/dcat#distribution',
-                                                  $resourceUri)/sr:bnode[. != '']"/>
+          <gmd:distributionInfo>
+            <gmd:MD_Distribution>
 
-          <xsl:if test="$distributions">
-            <gmd:distributionInfo>
-              <gmd:MD_Distribution>
+              <!-- distribution format -->
+              <!-- hard-coded as there's nowt in the rdf afaict -->
+              <gmd:distributionFormat>
+                  <gmd:MD_Format>
+                    <gmd:name gco:nilReason="missing">
+                        <gco:CharacterString/>
+                    </gmd:name>
+                    <gmd:version gco:nilReason="unknown"/>
+                    <gmd:specification gco:nilReason="missing">
+                        <gco:CharacterString/>
+                    </gmd:specification>
+                  </gmd:MD_Format>
+              </gmd:distributionFormat>
 
-                <!-- distribution format -->
-                <!-- hard-coded as there's nowt in the rdf afaict -->
-                <gmd:distributionFormat>
-                   <gmd:MD_Format>
-                      <gmd:name gco:nilReason="missing">
-                         <gco:CharacterString/>
-                      </gmd:name>
-                      <gmd:version gco:nilReason="unknown"/>
-                      <gmd:specification gco:nilReason="missing">
-                         <gco:CharacterString/>
-                      </gmd:specification>
-                   </gmd:MD_Format>
-                </gmd:distributionFormat>
-
-                <!-- transfer options -->
-                <gmd:transferOptions>
-                  <gmd:MD_DigitalTransferOptions>
-                    <xsl:for-each select="$distributions">
-                      <xsl:variable name="accessUrl"
-                                    select="gn-fn-sparql:getObject($root,
-                                                        'http://www.w3.org/ns/dcat#accessURL',
-                                                        .)/sr:uri"/>
-                      <gmd:onLine>
-                        <gmd:CI_OnlineResource>
-                          <gmd:linkage>
-                            <gco:CharacterString>
-                              <xsl:value-of select="$accessUrl"/>
-                            </gco:CharacterString>
-                          </gmd:linkage>
-
-                          <xsl:for-each select="gn-fn-sparql:getObject($root,
-                                                        'http://www.w3.org/ns/adms#representationTechnique',
-                                                        .)/sr:bnode[. != '']">
-                            <xsl:for-each select="gn-fn-sparql:getObject($root,
-                                                          'http://www.w3.org/2004/02/skos/core#prefLabel',
-                                                          .)/sr:literal[. != '']">
-                              <gmd:protocol>
-                                <gco:CharacterString>
-                                  <xsl:value-of select="."/>
-                                </gco:CharacterString>
-                              </gmd:protocol>
-                            </xsl:for-each>
-                          </xsl:for-each>
-
-                          <xsl:for-each select="gn-fn-sparql:getObject($root,
-                                                        'http://purl.org/dc/terms/title',
-                                                        .)/sr:literal">
-                            <gmd:name>
-                              <gco:CharacterString>
-                                <xsl:value-of select="."/>
-                              </gco:CharacterString>
-                            </gmd:name>
-                          </xsl:for-each>
-
-                          <xsl:for-each select="gn-fn-sparql:getObject($root,
-                                                        'http://purl.org/dc/terms/description',
-                                                        .)/sr:literal">
-                            <gmd:description>
-                              <gco:CharacterString>
-                                <xsl:value-of select="."/>
-                              </gco:CharacterString>
-                            </gmd:description>
-                          </xsl:for-each>
-                        </gmd:CI_OnlineResource>
-                      </gmd:onLine>
-                    </xsl:for-each>
-
-                    <!-- Link to CKAN record -->
-
+              <!-- transfer options -->
+              <gmd:transferOptions>
+                <gmd:MD_DigitalTransferOptions>
+                  <!-- <xsl:for-each select="$distributions">
+                    <xsl:variable name="accessUrl"
+                                  select="gn-fn-sparql:getObject($root,
+                                                      'http://www.w3.org/ns/dcat#accessURL',
+                                                      .)/sr:uri"/>
                     <gmd:onLine>
                       <gmd:CI_OnlineResource>
                         <gmd:linkage>
-                          <gmd:URL>
-                            <xsl:value-of select="gn-fn-sparql:getObject($root,
-                                              'http://purl.org/dc/terms/about',
-                                              $resourceUri)/@rdf:about"/>
-                          </gmd:URL>
-                        </gmd:linkage>
-                        <gmd:protocol>
-                          <gco:CharacterString>WWW:LINK-1.0-http--link</gco:CharacterString>
-                        </gmd:protocol>
-                        <gmd:name>
                           <gco:CharacterString>
-                            <xsl:value-of select="gn-fn-sparql:getObject($root,
-                                                  'http://purl.org/dc/terms/title',
-                                                  $resourceUri)/sr:literal"/>
+                            <xsl:value-of select="$accessUrl"/>
                           </gco:CharacterString>
-                        </gmd:name>
-                        <gmd:description>
-                          <gco:CharacterString>A link to the CKAN metadata record on the Spatial Hub.</gco:CharacterString>
-                        </gmd:description>
-                        <gmd:function>
-                          <gmd:CI_OnLineFunctionCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_OnLineFunctionCode" codeListValue="download"/>
-                        </gmd:function>
+                        </gmd:linkage>
+
+                        <xsl:for-each select="gn-fn-sparql:getObject($root,
+                                                      'http://www.w3.org/ns/adms#representationTechnique',
+                                                      .)/sr:bnode[. != '']">
+                          <xsl:for-each select="gn-fn-sparql:getObject($root,
+                                                        'http://www.w3.org/2004/02/skos/core#prefLabel',
+                                                        .)/sr:literal[. != '']">
+                            <gmd:protocol>
+                              <gco:CharacterString>
+                                <xsl:value-of select="."/>
+                              </gco:CharacterString>
+                            </gmd:protocol>
+                          </xsl:for-each>
+                        </xsl:for-each>
+
+                        <xsl:for-each select="gn-fn-sparql:getObject($root,
+                                                      'http://purl.org/dc/terms/title',
+                                                      .)/sr:literal">
+                          <gmd:name>
+                            <gco:CharacterString>
+                              <xsl:value-of select="."/>
+                            </gco:CharacterString>
+                          </gmd:name>
+                        </xsl:for-each>
+
+                        <xsl:for-each select="gn-fn-sparql:getObject($root,
+                                                      'http://purl.org/dc/terms/description',
+                                                      .)/sr:literal">
+                          <gmd:description>
+                            <gco:CharacterString>
+                              <xsl:value-of select="."/>
+                            </gco:CharacterString>
+                          </gmd:description>
+                        </xsl:for-each>
                       </gmd:CI_OnlineResource>
                     </gmd:onLine>
-                  </gmd:MD_DigitalTransferOptions>
-                </gmd:transferOptions>
-              </gmd:MD_Distribution>
-            </gmd:distributionInfo>
-          </xsl:if>
+                  </xsl:for-each> -->
+
+                  <!-- Link to CKAN record -->
+
+                  <gmd:onLine>
+                    <gmd:CI_OnlineResource>
+                      <gmd:linkage>
+                        <gmd:URL>
+                          <xsl:value-of select="gn-fn-sparql:getObject($root,
+                                            'http://purl.org/dc/terms/about',
+                                            $resourceUri)/@rdf:about"/>
+                        </gmd:URL>
+                      </gmd:linkage>
+                      <gmd:protocol>
+                        <gco:CharacterString>WWW:LINK-1.0-http--link</gco:CharacterString>
+                      </gmd:protocol>
+                      <gmd:name>
+                        <gco:CharacterString>
+                          <xsl:value-of select="gn-fn-sparql:getObject($root,
+                                                'http://purl.org/dc/terms/title',
+                                                $resourceUri)/sr:literal"/>
+                        </gco:CharacterString>
+                      </gmd:name>
+                      <gmd:description>
+                        <gco:CharacterString>A link to the CKAN metadata record on the Spatial Hub.</gco:CharacterString>
+                      </gmd:description>
+                      <gmd:function>
+                        <gmd:CI_OnLineFunctionCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_OnLineFunctionCode" codeListValue="download"/>
+                      </gmd:function>
+                    </gmd:CI_OnlineResource>
+                  </gmd:onLine>
+                </gmd:MD_DigitalTransferOptions>
+              </gmd:transferOptions>
+            </gmd:MD_Distribution>
+          </gmd:distributionInfo>
         </xsl:for-each>
+
         <!-- Data Quality -->
         <!-- scope and conformity are hard-coded as there's nothing in the rdf -->
       <gmd:dataQualityInfo >
