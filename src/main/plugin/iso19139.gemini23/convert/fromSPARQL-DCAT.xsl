@@ -219,7 +219,7 @@
                                                   $resourceUri)/sr:literal"/>
                         </gco:CharacterString>
                       </gmd:title>
-                      
+
                       <xsl:variable name="dateTypes" as="node()*">
                         <type dcatType="created" isoType="creation"/>
                         <type dcatType="modified" isoType="revision"/>
@@ -343,7 +343,7 @@
                       </gmd:otherConstraints>
                     </gmd:MD_LegalConstraints>
                   </gmd:resourceConstraints>
-                  
+
                   <!-- Spatial Representation Type -->
                   <!-- hard-coded as there's nowt in the dcat output about it afaict -->
 
@@ -351,7 +351,7 @@
                      <gmd:MD_SpatialRepresentationTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_SpatialRepresentationTypeCode"
                                                            codeListValue="textTable"/>
                   </gmd:spatialRepresentationType>
-                 
+
 
 
                   <!--
@@ -443,7 +443,7 @@
                     </xsl:for-each>
                   </xsl:for-each>
 
-                  
+
 
                 </gmd:MD_DataIdentification>
               </xsl:otherwise>
@@ -527,6 +527,32 @@
                         </gmd:CI_OnlineResource>
                       </gmd:onLine>
                     </xsl:for-each>
+
+                    <!-- Link to CKAN record -->
+                    <gmd:onLine>
+                      <gmd:CI_OnlineResource>
+                        <gmd:linkage>
+                          <gmd:URL>
+                            <xsl:text>https://data.spatialhub.scot/dataset/</xsl:text>
+                            <xsl:value-of select="$uuid"/>
+                          </gmd:URL>
+                        </gmd:linkage>
+                        <gmd:protocol>
+                          <gco:CharacterString>WWW:LINK-1.0-http--link</gco:CharacterString>
+                        </gmd:protocol>
+                        <gmd:name>
+                          <gco:CharacterString><xsl:value-of select="gn-fn-sparql:getObject($root,
+                          'http://purl.org/dc/terms/title',
+                          $resourceUri)/sr:literal"/></gco:CharacterString>
+                        </gmd:name>
+                        <gmd:description>
+                          <gco:CharacterString>A link to the CKAN metadata record on the Spatial Hub.</gco:CharacterString>
+                        </gmd:description>
+                        <gmd:function>
+                          <gmd:CI_OnLineFunctionCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_OnLineFunctionCode" codeListValue="download"/>
+                        </gmd:function>
+                      </gmd:CI_OnlineResource>
+                    </gmd:onLine>
                   </gmd:MD_DigitalTransferOptions>
                 </gmd:transferOptions>
               </gmd:MD_Distribution>
@@ -642,7 +668,7 @@
 
     <xsl:element name="{$element}">
       <gmd:CI_ResponsibleParty>
-        
+
         <gmd:organisationName>
               <gco:CharacterString>
                 <xsl:value-of select="$title"/>
