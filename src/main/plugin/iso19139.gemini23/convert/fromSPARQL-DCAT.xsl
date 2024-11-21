@@ -100,7 +100,7 @@
         </gmd:language>
 
         <gmd:hierarchyLevel>
-              <gmd:MD_ScopeCode codeList=""
+              <gmd:MD_ScopeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ScopeCode"
                                 codeListValue="{if ($isService)
                                                 then 'service'
                                                 else 'dataset'}"/>
@@ -452,6 +452,11 @@
 
           <!-- distribution info -->
 
+          <xsl:variable name="distributions"
+                        select="gn-fn-sparql:getObject($root,
+                                                  'http://www.w3.org/ns/dcat#distribution',
+                                                  $resourceUri)/sr:bnode[. != '']"/>
+
           <gmd:distributionInfo>
             <gmd:MD_Distribution>
 
@@ -472,55 +477,58 @@
               <!-- transfer options -->
               <gmd:transferOptions>
                 <gmd:MD_DigitalTransferOptions>
-                  <!-- <xsl:for-each select="$distributions">
-                    <xsl:variable name="accessUrl"
-                                  select="gn-fn-sparql:getObject($root,
-                                                      'http://www.w3.org/ns/dcat#accessURL',
-                                                      .)/sr:uri"/>
-                    <gmd:onLine>
-                      <gmd:CI_OnlineResource>
-                        <gmd:linkage>
-                          <gco:CharacterString>
-                            <xsl:value-of select="$accessUrl"/>
-                          </gco:CharacterString>
-                        </gmd:linkage>
+                  <xsl:if test="$distributions">
 
-                        <xsl:for-each select="gn-fn-sparql:getObject($root,
-                                                      'http://www.w3.org/ns/adms#representationTechnique',
-                                                      .)/sr:bnode[. != '']">
+                    <xsl:for-each select="$distributions">
+                      <xsl:variable name="accessUrl"
+                                    select="gn-fn-sparql:getObject($root,
+                                                        'http://www.w3.org/ns/dcat#accessURL',
+                                                        .)/sr:uri"/>
+                      <gmd:onLine>
+                        <gmd:CI_OnlineResource>
+                          <gmd:linkage>
+                            <gco:CharacterString>
+                              <xsl:value-of select="$accessUrl"/>
+                            </gco:CharacterString>
+                          </gmd:linkage>
+
                           <xsl:for-each select="gn-fn-sparql:getObject($root,
-                                                        'http://www.w3.org/2004/02/skos/core#prefLabel',
-                                                        .)/sr:literal[. != '']">
-                            <gmd:protocol>
+                                                        'http://www.w3.org/ns/adms#representationTechnique',
+                                                        .)/sr:bnode[. != '']">
+                            <xsl:for-each select="gn-fn-sparql:getObject($root,
+                                                          'http://www.w3.org/2004/02/skos/core#prefLabel',
+                                                          .)/sr:literal[. != '']">
+                              <gmd:protocol>
+                                <gco:CharacterString>
+                                  <xsl:value-of select="."/>
+                                </gco:CharacterString>
+                              </gmd:protocol>
+                            </xsl:for-each>
+                          </xsl:for-each>
+
+                          <xsl:for-each select="gn-fn-sparql:getObject($root,
+                                                        'http://purl.org/dc/terms/title',
+                                                        .)/sr:literal">
+                            <gmd:name>
                               <gco:CharacterString>
                                 <xsl:value-of select="."/>
                               </gco:CharacterString>
-                            </gmd:protocol>
+                            </gmd:name>
                           </xsl:for-each>
-                        </xsl:for-each>
 
-                        <xsl:for-each select="gn-fn-sparql:getObject($root,
-                                                      'http://purl.org/dc/terms/title',
-                                                      .)/sr:literal">
-                          <gmd:name>
-                            <gco:CharacterString>
-                              <xsl:value-of select="."/>
-                            </gco:CharacterString>
-                          </gmd:name>
-                        </xsl:for-each>
-
-                        <xsl:for-each select="gn-fn-sparql:getObject($root,
-                                                      'http://purl.org/dc/terms/description',
-                                                      .)/sr:literal">
-                          <gmd:description>
-                            <gco:CharacterString>
-                              <xsl:value-of select="."/>
-                            </gco:CharacterString>
-                          </gmd:description>
-                        </xsl:for-each>
-                      </gmd:CI_OnlineResource>
-                    </gmd:onLine>
-                  </xsl:for-each> -->
+                          <xsl:for-each select="gn-fn-sparql:getObject($root,
+                                                        'http://purl.org/dc/terms/description',
+                                                        .)/sr:literal">
+                            <gmd:description>
+                              <gco:CharacterString>
+                                <xsl:value-of select="."/>
+                              </gco:CharacterString>
+                            </gmd:description>
+                          </xsl:for-each>
+                        </gmd:CI_OnlineResource>
+                      </gmd:onLine>
+                    </xsl:for-each>
+                  </xsl:if>
 
                   <!-- Link to CKAN record -->
 
@@ -528,9 +536,10 @@
                     <gmd:CI_OnlineResource>
                       <gmd:linkage>
                         <gmd:URL>
+                          <xsl:text>https://data.spatialhub.scot/dataset/</xsl:text>
                           <xsl:value-of select="gn-fn-sparql:getObject($root,
-                                                'http://purl.org/dc/terms/title',
-                                                $resourceUri)/../@rdf:about"/>
+                                                'http://purl.org/dc/terms/identifier',
+                                                $resourceUri)/sr:literal"/>
                         </gmd:URL>
                       </gmd:linkage>
                       <gmd:protocol>
@@ -666,19 +675,36 @@
 
     <xsl:element name="{$element}">
       <gmd:CI_ResponsibleParty>
-
-        <gmd:organisationName>
+        <xsl:choose>
+          <xsl:when test="$title != ''">
+            <gmd:organisationName>
               <gco:CharacterString>
                 <xsl:value-of select="$title"/>
               </gco:CharacterString>
-        </gmd:organisationName>
+            </gmd:organisationName>
+          </xsl:when>
+          <xsl:otherwise>
+            <gmd:organisationName gco:nilReason="missing">
+              <gco:CharacterString />
+            </gmd:organisationName>
+          </xsl:otherwise>
+        </xsl:choose>
         <gmd:contactInfo>
           <gmd:CI_Contact>
             <gmd:onlineResource>
               <gmd:CI_OnlineResource>
-                <gmd:electronicMailAddress>
-                  <gco:CharacterString><xsl:value-of select="$email"/></gco:CharacterString>
-                </gmd:electronicMailAddress>
+                <xsl:choose>
+                  <xsl:when test="$email != ''">
+                    <gmd:electronicMailAddress>
+                      <gco:CharacterString><xsl:value-of select="$email"/></gco:CharacterString>
+                    </gmd:electronicMailAddress>
+                  </xsl:when>
+                  <xsl:otherwise>
+                    <gmd:electronicMailAddress gco:nilReason="missing">
+                      <gco:CharacterString />
+                    </gmd:electronicMailAddress>
+                  </xsl:otherwise>
+                </xsl:choose>
               </gmd:CI_OnlineResource>
             </gmd:onlineResource>
           </gmd:CI_Contact>
