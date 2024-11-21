@@ -578,7 +578,7 @@
                         <gmd:linkage>
                           <gmd:URL>
                             <xsl:text>https://data.spatialhub.scot/dataset/</xsl:text>
-                            <xsl:value-of select="$identifier" />
+                            <xsl:value-of select="$uuid" />
                           </gmd:URL>
                         </gmd:linkage>
                         <gmd:protocol>
