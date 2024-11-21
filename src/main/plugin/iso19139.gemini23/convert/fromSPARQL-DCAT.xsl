@@ -529,21 +529,25 @@
                     </xsl:for-each>
 
                     <!-- Link to CKAN record -->
-                    <xsl:variable name="identifier"
-                      select="gn-fn-sparql:getObject($root,
-                      'http://purl.org/dc/terms/identifier',
-                      $resourceUri)/sr:literal"/>
-                    
+
                     <gmd:onLine>
                       <gmd:CI_OnlineResource>
                         <gmd:linkage>
-                          <gmd:URL><xsl:text>https://data.spatialhub.scot/dataset/</xsl:text><xsl:value-of select="$identifier"/></gmd:URL>
+                          <gmd:URL>
+                            <xsl:value-of select="gn-fn-sparql:getObject($root,
+                                              'http://purl.org/dc/terms/about',
+                                              $resourceUri)/@rdf:about"/>
+                          </gmd:URL>
                         </gmd:linkage>
                         <gmd:protocol>
                           <gco:CharacterString>WWW:LINK-1.0-http--link</gco:CharacterString>
                         </gmd:protocol>
                         <gmd:name>
-                          <gco:CharacterString></gco:CharacterString>
+                          <gco:CharacterString>
+                            <xsl:value-of select="gn-fn-sparql:getObject($root,
+                                                  'http://purl.org/dc/terms/title',
+                                                  $resourceUri)/sr:literal"/>
+                          </gco:CharacterString>
                         </gmd:name>
                         <gmd:description>
                           <gco:CharacterString>A link to the CKAN metadata record on the Spatial Hub.</gco:CharacterString>
