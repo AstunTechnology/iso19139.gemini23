@@ -93,9 +93,14 @@
                                 'http://purl.org/dc/terms/identifier',
                                 $recordUri)/sr:literal" />
 
+        <xsl:variable name="identifier"
+        select="gn-fn-sparql:getObject($root,
+                                  'http://purl.org/dc/terms/identifier',
+                                  $resourceUri)/sr:literal" />
+
         <gmd:fileIdentifier>
           <gco:CharacterString>
-            <xsl:value-of select="$uuid" />
+            <xsl:value-of select="$identifier" />
           </gco:CharacterString>
         </gmd:fileIdentifier>
 
@@ -253,17 +258,12 @@
                         </xsl:for-each>
                       </xsl:for-each>
 
-
-                      <xsl:variable name="identifier"
-                        select="gn-fn-sparql:getObject($root,
-                                                  'http://purl.org/dc/terms/identifier',
-                                                  $resourceUri)/sr:literal" />
-                      <xsl:if test="$identifier != ''">
+                      <xsl:if test="$uuid != ''">
                         <gmd:identifier>
                           <gmd:MD_Identifier>
                             <gmd:code>
                               <gco:CharacterString>
-                                <xsl:value-of select="$identifier" />
+                                <xsl:value-of select="$uuid" />
                               </gco:CharacterString>
                             </gmd:code>
                           </gmd:MD_Identifier>
@@ -578,7 +578,7 @@
                         <gmd:linkage>
                           <gmd:URL>
                             <xsl:text>https://data.spatialhub.scot/dataset/</xsl:text>
-                            <xsl:value-of select="$uuid" />
+                            <xsl:value-of select="$identifier" />
                           </gmd:URL>
                         </gmd:linkage>
                         <gmd:protocol>
