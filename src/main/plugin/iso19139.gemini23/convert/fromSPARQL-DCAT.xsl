@@ -1,35 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:gmd="http://www.isotc211.org/2005/gmd"
-               xmlns:gco="http://www.isotc211.org/2005/gco"
-               xmlns:srv="http://www.isotc211.org/2005/srv"
-               xmlns:gmx="http://www.isotc211.org/2005/gmx"
-               xmlns:gts="http://www.isotc211.org/2005/gts"
-               xmlns:gsr="http://www.isotc211.org/2005/gsr"
-               xmlns:gmi="http://www.isotc211.org/2005/gmi"
-               xmlns:gss="http://www.isotc211.org/2005/gss"
-               xmlns:gml="http://www.opengis.net/gml/3.2"
-               xmlns:xlink="http://www.w3.org/1999/xlink"
-               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xmlns:sr="http://www.w3.org/2005/sparql-results#"
-                xmlns:xs="http://www.w3.org/2001/XMLSchema"
-                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                xmlns:spdx="http://spdx.org/rdf/terms#"
-                xmlns:skos="http://www.w3.org/2004/02/skos/core#"
-                xmlns:adms="http://www.w3.org/ns/adms#"
-                xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-                xmlns:dct="http://purl.org/dc/terms/"
-                xmlns:dcat="http://www.w3.org/ns/dcat#"
-                xmlns:vcard="http://www.w3.org/2006/vcard/ns#"
-                xmlns:foaf="http://xmlns.com/foaf/0.1/"
-                xmlns:owl="http://www.w3.org/2002/07/owl#"
-                xmlns:schema="http://schema.org/"
-                xmlns:locn="http://www.w3.org/ns/locn#"
-                xmlns:mdcat="http://data.vlaanderen.be/ns/metadata-dcat#"
-                xmlns:fn="http://www.w3.org/2005/xpath-functions"
-                xmlns:util="java:org.fao.geonet.util.XslUtil"
-                xmlns:gn-fn-sparql="http://geonetwork-opensource.org/xsl/functions/sparql"
-                version="2.0"
-                exclude-result-prefixes="#all">
+              xmlns:gco="http://www.isotc211.org/2005/gco"
+              xmlns:srv="http://www.isotc211.org/2005/srv"
+              xmlns:gmx="http://www.isotc211.org/2005/gmx"
+              xmlns:gts="http://www.isotc211.org/2005/gts"
+              xmlns:gsr="http://www.isotc211.org/2005/gsr"
+              xmlns:gmi="http://www.isotc211.org/2005/gmi"
+              xmlns:gss="http://www.isotc211.org/2005/gss"
+              xmlns:gml="http://www.opengis.net/gml/3.2"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xmlns:sr="http://www.w3.org/2005/sparql-results#"
+              xmlns:xs="http://www.w3.org/2001/XMLSchema"
+              xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+              xmlns:spdx="http://spdx.org/rdf/terms#"
+              xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+              xmlns:adms="http://www.w3.org/ns/adms#"
+              xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+              xmlns:dct="http://purl.org/dc/terms/"
+              xmlns:dcat="http://www.w3.org/ns/dcat#"
+              xmlns:vcard="http://www.w3.org/2006/vcard/ns#"
+              xmlns:foaf="http://xmlns.com/foaf/0.1/"
+              xmlns:owl="http://www.w3.org/2002/07/owl#"
+              xmlns:schema="http://schema.org/"
+              xmlns:locn="http://www.w3.org/ns/locn#"
+              xmlns:mdcat="http://data.vlaanderen.be/ns/metadata-dcat#"
+              xmlns:fn="http://www.w3.org/2005/xpath-functions"
+              xmlns:util="java:org.fao.geonet.util.XslUtil"
+              xmlns:gn-fn-sparql="http://geonetwork-opensource.org/xsl/functions/sparql"
+              version="2.0"
+              exclude-result-prefixes="#all">
 
   <xsl:import href="utility/createiso19139Namespaces.xsl"/>
   <xsl:import href="common/functions-sparql.xsl"/>
@@ -530,16 +530,13 @@
                     </xsl:for-each>
                   </xsl:if>
 
-                  <!-- Link to CKAN record -->
+                  <!-- Link to original CKAN record -->
 
                   <gmd:onLine>
                     <gmd:CI_OnlineResource>
                       <gmd:linkage>
                         <gmd:URL>
-                          <xsl:text>https://data.spatialhub.scot/dataset/</xsl:text>
-                          <xsl:value-of select="gn-fn-sparql:getObject($root,
-                                                'http://purl.org/dc/terms/identifier',
-                                                $resourceUri)/sr:literal"/>
+                          <xsl:copy-of select="string($resourceUri)"/>
                         </gmd:URL>
                       </gmd:linkage>
                       <gmd:protocol>
@@ -553,7 +550,7 @@
                         </gco:CharacterString>
                       </gmd:name>
                       <gmd:description>
-                        <gco:CharacterString>A link to the CKAN metadata record on the Spatial Hub.</gco:CharacterString>
+                        <gco:CharacterString>A link to the original CKAN metadata record.</gco:CharacterString>
                       </gmd:description>
                       <gmd:function>
                         <gmd:CI_OnLineFunctionCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_OnLineFunctionCode" codeListValue="download"/>
