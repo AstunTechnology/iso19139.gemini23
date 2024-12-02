@@ -1,35 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:gmd="http://www.isotc211.org/2005/gmd"
-               xmlns:gco="http://www.isotc211.org/2005/gco"
-               xmlns:srv="http://www.isotc211.org/2005/srv"
-               xmlns:gmx="http://www.isotc211.org/2005/gmx"
-               xmlns:gts="http://www.isotc211.org/2005/gts"
-               xmlns:gsr="http://www.isotc211.org/2005/gsr"
-               xmlns:gmi="http://www.isotc211.org/2005/gmi"
-               xmlns:gss="http://www.isotc211.org/2005/gss"
-               xmlns:gml="http://www.opengis.net/gml/3.2"
-               xmlns:xlink="http://www.w3.org/1999/xlink"
-               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xmlns:sr="http://www.w3.org/2005/sparql-results#"
-                xmlns:xs="http://www.w3.org/2001/XMLSchema"
-                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                xmlns:spdx="http://spdx.org/rdf/terms#"
-                xmlns:skos="http://www.w3.org/2004/02/skos/core#"
-                xmlns:adms="http://www.w3.org/ns/adms#"
-                xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-                xmlns:dct="http://purl.org/dc/terms/"
-                xmlns:dcat="http://www.w3.org/ns/dcat#"
-                xmlns:vcard="http://www.w3.org/2006/vcard/ns#"
-                xmlns:foaf="http://xmlns.com/foaf/0.1/"
-                xmlns:owl="http://www.w3.org/2002/07/owl#"
-                xmlns:schema="http://schema.org/"
-                xmlns:locn="http://www.w3.org/ns/locn#"
-                xmlns:mdcat="http://data.vlaanderen.be/ns/metadata-dcat#"
-                xmlns:fn="http://www.w3.org/2005/xpath-functions"
-                xmlns:util="java:org.fao.geonet.util.XslUtil"
-                xmlns:gn-fn-sparql="http://geonetwork-opensource.org/xsl/functions/sparql"
-                version="2.0"
-                exclude-result-prefixes="#all">
+              xmlns:gco="http://www.isotc211.org/2005/gco"
+              xmlns:srv="http://www.isotc211.org/2005/srv"
+              xmlns:gmx="http://www.isotc211.org/2005/gmx"
+              xmlns:gts="http://www.isotc211.org/2005/gts"
+              xmlns:gsr="http://www.isotc211.org/2005/gsr"
+              xmlns:gmi="http://www.isotc211.org/2005/gmi"
+              xmlns:gss="http://www.isotc211.org/2005/gss"
+              xmlns:gml="http://www.opengis.net/gml/3.2"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xmlns:sr="http://www.w3.org/2005/sparql-results#"
+              xmlns:xs="http://www.w3.org/2001/XMLSchema"
+              xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+              xmlns:spdx="http://spdx.org/rdf/terms#"
+              xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+              xmlns:adms="http://www.w3.org/ns/adms#"
+              xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+              xmlns:dct="http://purl.org/dc/terms/"
+              xmlns:dcat="http://www.w3.org/ns/dcat#"
+              xmlns:vcard="http://www.w3.org/2006/vcard/ns#"
+              xmlns:foaf="http://xmlns.com/foaf/0.1/"
+              xmlns:owl="http://www.w3.org/2002/07/owl#"
+              xmlns:schema="http://schema.org/"
+              xmlns:locn="http://www.w3.org/ns/locn#"
+              xmlns:mdcat="http://data.vlaanderen.be/ns/metadata-dcat#"
+              xmlns:fn="http://www.w3.org/2005/xpath-functions"
+              xmlns:util="java:org.fao.geonet.util.XslUtil"
+              xmlns:gn-fn-sparql="http://geonetwork-opensource.org/xsl/functions/sparql"
+              version="2.0"
+              exclude-result-prefixes="#all">
 
   <xsl:import href="utility/createiso19139Namespaces.xsl"/>
   <xsl:import href="common/functions-sparql.xsl"/>
@@ -100,7 +100,7 @@
         </gmd:language>
 
         <gmd:hierarchyLevel>
-              <gmd:MD_ScopeCode codeList=""
+              <gmd:MD_ScopeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ScopeCode"
                                 codeListValue="{if ($isService)
                                                 then 'service'
                                                 else 'dataset'}"/>
@@ -219,7 +219,7 @@
                                                   $resourceUri)/sr:literal"/>
                         </gco:CharacterString>
                       </gmd:title>
-                      
+
                       <xsl:variable name="dateTypes" as="node()*">
                         <type dcatType="created" isoType="creation"/>
                         <type dcatType="modified" isoType="revision"/>
@@ -343,7 +343,7 @@
                       </gmd:otherConstraints>
                     </gmd:MD_LegalConstraints>
                   </gmd:resourceConstraints>
-                  
+
                   <!-- Spatial Representation Type -->
                   <!-- hard-coded as there's nowt in the dcat output about it afaict -->
 
@@ -351,7 +351,7 @@
                      <gmd:MD_SpatialRepresentationTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_SpatialRepresentationTypeCode"
                                                            codeListValue="textTable"/>
                   </gmd:spatialRepresentationType>
-                 
+
 
 
                   <!--
@@ -443,7 +443,7 @@
                     </xsl:for-each>
                   </xsl:for-each>
 
-                  
+
 
                 </gmd:MD_DataIdentification>
               </xsl:otherwise>
@@ -457,27 +457,28 @@
                                                   'http://www.w3.org/ns/dcat#distribution',
                                                   $resourceUri)/sr:bnode[. != '']"/>
 
-          <xsl:if test="$distributions">
-            <gmd:distributionInfo>
-              <gmd:MD_Distribution>
+          <gmd:distributionInfo>
+            <gmd:MD_Distribution>
 
-                <!-- distribution format -->
-                <!-- hard-coded as there's nowt in the rdf afaict -->
-                <gmd:distributionFormat>
-                   <gmd:MD_Format>
-                      <gmd:name gco:nilReason="missing">
-                         <gco:CharacterString/>
-                      </gmd:name>
-                      <gmd:version gco:nilReason="unknown"/>
-                      <gmd:specification gco:nilReason="missing">
-                         <gco:CharacterString/>
-                      </gmd:specification>
-                   </gmd:MD_Format>
-                </gmd:distributionFormat>
+              <!-- distribution format -->
+              <!-- hard-coded as there's nowt in the rdf afaict -->
+              <gmd:distributionFormat>
+                  <gmd:MD_Format>
+                    <gmd:name gco:nilReason="missing">
+                        <gco:CharacterString/>
+                    </gmd:name>
+                    <gmd:version gco:nilReason="unknown"/>
+                    <gmd:specification gco:nilReason="missing">
+                        <gco:CharacterString/>
+                    </gmd:specification>
+                  </gmd:MD_Format>
+              </gmd:distributionFormat>
 
-                <!-- transfer options -->
-                <gmd:transferOptions>
-                  <gmd:MD_DigitalTransferOptions>
+              <!-- transfer options -->
+              <gmd:transferOptions>
+                <gmd:MD_DigitalTransferOptions>
+                  <xsl:if test="$distributions">
+
                     <xsl:for-each select="$distributions">
                       <xsl:variable name="accessUrl"
                                     select="gn-fn-sparql:getObject($root,
@@ -527,12 +528,41 @@
                         </gmd:CI_OnlineResource>
                       </gmd:onLine>
                     </xsl:for-each>
-                  </gmd:MD_DigitalTransferOptions>
-                </gmd:transferOptions>
-              </gmd:MD_Distribution>
-            </gmd:distributionInfo>
-          </xsl:if>
+                  </xsl:if>
+
+                  <!-- Link to original CKAN record -->
+
+                  <gmd:onLine>
+                    <gmd:CI_OnlineResource>
+                      <gmd:linkage>
+                        <gmd:URL>
+                          <xsl:copy-of select="string($resourceUri)"/>
+                        </gmd:URL>
+                      </gmd:linkage>
+                      <gmd:protocol>
+                        <gco:CharacterString>WWW:LINK-1.0-http--link</gco:CharacterString>
+                      </gmd:protocol>
+                      <gmd:name>
+                        <gco:CharacterString>
+                          <xsl:value-of select="gn-fn-sparql:getObject($root,
+                                                'http://purl.org/dc/terms/title',
+                                                $resourceUri)/sr:literal"/>
+                        </gco:CharacterString>
+                      </gmd:name>
+                      <gmd:description>
+                        <gco:CharacterString>A link to the original CKAN metadata record.</gco:CharacterString>
+                      </gmd:description>
+                      <gmd:function>
+                        <gmd:CI_OnLineFunctionCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_OnLineFunctionCode" codeListValue="download"/>
+                      </gmd:function>
+                    </gmd:CI_OnlineResource>
+                  </gmd:onLine>
+                </gmd:MD_DigitalTransferOptions>
+              </gmd:transferOptions>
+            </gmd:MD_Distribution>
+          </gmd:distributionInfo>
         </xsl:for-each>
+
         <!-- Data Quality -->
         <!-- scope and conformity are hard-coded as there's nothing in the rdf -->
       <gmd:dataQualityInfo >
@@ -642,19 +672,36 @@
 
     <xsl:element name="{$element}">
       <gmd:CI_ResponsibleParty>
-        
-        <gmd:organisationName>
+        <xsl:choose>
+          <xsl:when test="$title != ''">
+            <gmd:organisationName>
               <gco:CharacterString>
                 <xsl:value-of select="$title"/>
               </gco:CharacterString>
-        </gmd:organisationName>
+            </gmd:organisationName>
+          </xsl:when>
+          <xsl:otherwise>
+            <gmd:organisationName gco:nilReason="missing">
+              <gco:CharacterString />
+            </gmd:organisationName>
+          </xsl:otherwise>
+        </xsl:choose>
         <gmd:contactInfo>
           <gmd:CI_Contact>
             <gmd:onlineResource>
               <gmd:CI_OnlineResource>
-                <gmd:electronicMailAddress>
-                  <gco:CharacterString><xsl:value-of select="$email"/></gco:CharacterString>
-                </gmd:electronicMailAddress>
+                <xsl:choose>
+                  <xsl:when test="$email != ''">
+                    <gmd:electronicMailAddress>
+                      <gco:CharacterString><xsl:value-of select="$email"/></gco:CharacterString>
+                    </gmd:electronicMailAddress>
+                  </xsl:when>
+                  <xsl:otherwise>
+                    <gmd:electronicMailAddress gco:nilReason="missing">
+                      <gco:CharacterString />
+                    </gmd:electronicMailAddress>
+                  </xsl:otherwise>
+                </xsl:choose>
               </gmd:CI_OnlineResource>
             </gmd:onlineResource>
           </gmd:CI_Contact>
