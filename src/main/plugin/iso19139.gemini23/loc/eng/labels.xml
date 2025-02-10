@@ -358,10 +358,10 @@
     <description>Information about the distributor</description>
   </element>
   <element name="gmd:MD_ExtendedElementInformation" id="306.0">
+    <label>Extended Element Information</label>
     <description>New metadata element, not found in ISO 19115, which is required to describe
       geographic data
     </description>
-    <label>Extended Element Information</label>
   </element>
   <element name="gmd:MD_FeatureCatalogueDescription" id="233.0">
     <label>Feature catalogue description</label>
@@ -561,8 +561,7 @@
   </element>
   <element name="gmd:alternateTitle" id="361.0">
     <label>Alternative title</label>
-    <description>Short name, other name, acronym or alternative language title for the data resource
-    </description>
+    <description>Short name, other name, acronym or alternative language title for the data resource</description>
   </element>
   <element name="gmd:amendmentNumber" id="287.0">
     <label>Amendment number</label>
@@ -592,12 +591,10 @@
   <element name="gmd:attributeInstances" id="153.0">
     <label>Attribute instances</label>
     <description>Attribute instances to which the information applies</description>
-    <condition/>
   </element>
   <element name="gmd:attributes" id="150.0">
     <label>Attributes</label>
     <description>Attributes to which the information applies</description>
-    <condition/>
   </element>
   <element name="gmd:authority" id="206.0">
     <label>Authority</label>
@@ -1659,7 +1656,6 @@
   </element>
   <element name="gmd:name">
     <label>Name</label>
-    <description/>
   </element>
   <element name="gmd:nameOfMeasure" id="100.0">
     <label>Name of measure</label>
@@ -1721,8 +1717,7 @@
         value="Non-compliance rate with respect to the rules of the conceptual schema"
         title="Number of items in the dataset that are noncompliant to the rules of the conceptual schema in relation to the total number of these items supposed to be in the dataset"
         id="ISO19138:2006:measure:12">Non-compliance rate with respect to the rules of the
-        conceptual
-        schema
+        conceptual schema
       </option>
       <option value=" Compliance rate with the rules of the conceptual schema"
               title="number of items in the dataset in compliance with the rules of the conceptual schema in relation to the total number of items"
@@ -1895,8 +1890,7 @@
       <option
         value="Absolute circular error at 90% significance level of biased data"
         title="The absolute horizontal accuracy of the data’s coordinates, expressed in terms of circular error at 90% probability given that a bias is present."
-        id="ISO19138:2006:measure:49">Absolute circular error at 90% significance level of biased
-        data
+        id="ISO19138:2006:measure:49">Absolute circular error at 90% significance level of biased data
       </option>
       <option value="Uncertainty ellipse"
               title="2D ellipse with the two main axes indicating the direction and magnitude of the highest and the lowest uncertainty of a 2D point"
@@ -2040,7 +2034,8 @@
   </element>
   <element name="gmd:onLine" id="277.0">
     <label>Resource Locator</label>
-    <description>Location (address) for online access using a Uniform Resource Locator (URL) address or similar addressing scheme
+    <description>Location (address) for online access using a Uniform Resource Locator (URL)
+      address or similar addressing scheme
     </description>
   </element>
   <element name="gmd:onlineResource" id="390.0">
@@ -2075,13 +2070,10 @@
     <description>Class of information that does not fall into the other categories to which the
       information applies
     </description>
-    <condition/>
   </element>
   <element name="gmd:other" context="gmd:MD_ScopeDescription" id="155.0">
     <label>Scope Description</label>
-    <description>Desciription of the level of scope indicated by the Quality Scope element
-    </description>
-    <condition/>
+    <description>Desciription of the level of scope indicated by the Quality Scope element</description>
   </element>
   <element name="gmd:otherCitationDetails" id="370.0">
     <label>Other citation details</label>
@@ -2475,8 +2467,7 @@
   </element>
   <element name="gmd:spatialResolution" id="38.0">
     <label>Spatial resolution</label>
-    <description>Measure of the granularity of the data (in metres)
-    </description>
+    <description>Measure of the granularity of the data (in metres)</description>
     <condition>mandatory</condition>
   </element>
   <element name="gmd:specificUsage" id="63.0">
@@ -2487,8 +2478,7 @@
   <element name="gmd:specification" id="130.0" context="gmd:DQ_ConformanceResult">
     <condition>mandatory</condition>
     <label>Specification</label>
-    <description>Citation of the product specification or user requirement against which data resource is evaluated
-    </description>
+    <description>Citation of the product specification or user requirement against which data resource is evaluated</description>
   </element>
   <element name="gmd:specification" id="288.0" context="gmd:MD_Format">
     <label>Specification</label>
@@ -2499,8 +2489,7 @@
   </element>
   <element name="gmd:statement" id="83.0">
     <label>Statement</label>
-    <description>Information about the events or source data used in the construction of the data resource
-    </description>
+    <description>Information about the events or source data used in the construction of the data resource</description>
   </element>
   <element name="gmd:status" id="28.0">
     <label>Status</label>
@@ -2680,7 +2669,6 @@
   </element>
   <element name="gmd:value">
     <label>Value</label>
-    <description/>
   </element>
   <element name="gmd:value" id="544.0" context="gmd:MD_Type">
     <label>Value</label>
@@ -2738,22 +2726,18 @@
     <label>Begin date</label>
     <description>Formatted as 2007-09-12T15:00:00 (YYYY-MM-DDTHH:mm:ss)</description>
   </element>
-
   <element name="gml:endPosition">
     <label>End date</label>
     <description>Formatted as 2007-09-12T15:00:00 (YYYY-MM-DDTHH:mm:ss)</description>
   </element>
-
   <element name="gml:relatedTime">
     <label>Related time</label>
     <description>Defines the relation of a given time to the object.</description>
   </element>
-
   <element name="gml:coordinates">
     <label>Coordinates</label>
     <description>Used to record an array of tuples or coordinates.</description>
   </element>
-
   <element name="gml:Polygon">
     <label>Polygon</label>
     <description>A gml:Polygon is a special surface that is defined by a single surface patch.
@@ -2761,13 +2745,11 @@
       interior.
     </description>
   </element>
-
   <element name="gml:Point">
     <label>Point</label>
     <description>A gml:Point is defined by a single coordinate tuple.</description>
     <example>74. -37.</example>
   </element>
-
   <element name="gml:LineString">
     <label>Line</label>
     <description>A gml:LineString is a special curve that consists of a single segment with
@@ -2775,7 +2757,6 @@
       interpolation between them.
     </description>
   </element>
-
   <element name="gml:LinearRing">
     <label>Linear ring</label>
     <description>A gml:LinearRing is defined by four or more coordinate tuples, with linear
@@ -2783,25 +2764,19 @@
       coincident.
     </description>
   </element>
-
   <element name="gml:exterior">
     <label>Outer boundary</label>
     <description>The outer boundary of a solid.</description>
   </element>
-
   <element name="gml:interior">
     <label>Inner boundary</label>
     <description>The inner boundary of a solid</description>
   </element>
-
-
   <element name="gml:begin">
     <label>Begin</label>
-    <description/>
   </element>
   <element name="gml:end">
     <label>End</label>
-    <description/>
   </element>
   <element name="gml:duration">
     <label>Duration</label>
@@ -2823,15 +2798,12 @@
   </element>
   <element name="gml:name">
     <label>Name</label>
-    <description></description>
   </element>
   <element name="gml:metaDataProperty">
     <label>Metadata property</label>
-    <description></description>
   </element>
   <element name="gml:identifier">
     <label>Identifier</label>
-    <description></description>
   </element>
   <element name="gml:description">
     <label>Description</label>
@@ -2839,42 +2811,32 @@
   </element>
   <element name="gml:descriptionReference">
     <label>Description reference</label>
-    <description></description>
   </element>
   <element name="gml:TimeInstant">
     <label>Time instant</label>
-    <description/>
   </element>
   <element name="gml:TimePosition">
     <label>Time position</label>
-    <description/>
   </element>
   <element name="gml:timePosition">
     <label>Time position</label>
-    <description/>
   </element>
   <element name="gml:TimePeriod">
     <label>Time period</label>
-    <description/>
   </element>
   <element name="gml:TimeNode">
     <label>Time node</label>
-    <description/>
   </element>
   <element name="gml:TimeEdge">
     <label>Time edge</label>
-    <description/>
   </element>
   <element name="gml:ProjectedCRS">
     <label>Projected CRS</label>
-    <description/>
   </element>
-
   <element name="gml:id">
     <label>Identifier</label>
     <description>Unique identifier</description>
   </element>
-
   <element name="gml:id" id="191.0" context="gmd:MD_CRS">
     <label>Ellipsoid</label>
     <description>Identity of the ellipsoid used</description>
@@ -2886,7 +2848,6 @@
   </element>
   <element name="indeterminatePosition">
     <label>Indeterminate position</label>
-    <description></description>
   </element>
   <element name="frame">
     <label>Frame</label>
@@ -2896,22 +2857,16 @@
   </element>
   <element name="calendarEraName">
     <label>Name of the calendar era</label>
-    <description></description>
   </element>
   <element name="unit">
     <label>Unit</label>
-    <description></description>
   </element>
   <element name="radix">
     <label>Radix</label>
-    <description></description>
   </element>
   <element name="factor">
     <label>Factor</label>
-    <description></description>
   </element>
-
-
   <element name="srv:SV_ServiceIdentification">
     <label>Service Identification (19119)</label>
     <description>ISO 19119-2005 Service Identification</description>
@@ -2921,8 +2876,7 @@
   </element>
   <element name="srv:serviceType"><!-- readonly="true" -->
     <label>Spatial data service type</label>
-    <description>Generic name of the service type
-    </description>
+    <description>Generic name of the service type</description>
     <helper>
       <!--<option value="OGC:WMS">OGC Web Map Service (OGC:WMS)</option>
       <option value="OGC:WFS">OGC Web Feature Service (OGC:WFS)</option>
@@ -3473,111 +3427,109 @@
   <element name="gmx:MX_ScopeCode">
     <label>Code</label>
   </element>
-
- <element name="gmd:CI_PresentationFormCode">
-  <label>Presentation Form Code</label>
+  <element name="gmd:CI_PresentationFormCode">
+    <label>Presentation Form Code</label>
   </element>
- <element name="gmd:CI_OnLineFunctionCode">
-  <label>Online Function Code</label>
+  <element name="gmd:CI_OnLineFunctionCode">
+    <label>Online Function Code</label>
   </element>
- <element name="gmd:CI_DateTypeCode">
-  <label>Citation Date Type Code</label>
+  <element name="gmd:CI_DateTypeCode">
+    <label>Citation Date Type Code</label>
   </element>
- <element name="gmd:MD_CellGeometryCode">
-  <label>Cell Geometry Code</label>
+  <element name="gmd:MD_CellGeometryCode">
+    <label>Cell Geometry Code</label>
   </element>
- <element name="gmd:MD_DimensionNameTypeCode">
-  <label>Dimensions Name Type Code</label>
+  <element name="gmd:MD_DimensionNameTypeCode">
+    <label>Dimensions Name Type Code</label>
   </element>
- <element name="gmd:MD_DatatypeCode">
-  <label>Metadata Data Type Code</label>
+  <element name="gmd:MD_DatatypeCode">
+    <label>Metadata Data Type Code</label>
   </element>
- <element name="gmd:MD_CoverageContentTypeCode">
-  <label>Coverage Content Type Code</label>
+  <element name="gmd:MD_CoverageContentTypeCode">
+    <label>Coverage Content Type Code</label>
   </element>
- <element name="gmd:MD_ImagingConditionCode">
-  <label>Imaging Condition Code</label>
+  <element name="gmd:MD_ImagingConditionCode">
+    <label>Imaging Condition Code</label>
   </element>
- <element name="gmd:MD_ClassificationCode">
-  <label>Classification Code</label>
+  <element name="gmd:MD_ClassificationCode">
+    <label>Classification Code</label>
   </element>
- <element name="gmd:MD_RestrictionCode">
-  <label>Restriction Code</label>
+  <element name="gmd:MD_RestrictionCode">
+    <label>Restriction Code</label>
   </element>
- <element name="gmd:MD_DistributionUnits">
-  <label>Distribution Units</label>
+  <element name="gmd:MD_DistributionUnits">
+    <label>Distribution Units</label>
   </element>
- <element name="gmd:MD_MediumFormatCode">
-  <label>Format Code</label>
+  <element name="gmd:MD_MediumFormatCode">
+    <label>Format Code</label>
   </element>
- <element name="gmd:MD_MediumNameCode">
-  <label>Name Code</label>
+  <element name="gmd:MD_MediumNameCode">
+    <label>Name Code</label>
   </element>
- <element name="gmd:MD_KeywordTypeCode">
-  <label>Keyword Type Code</label>
+  <element name="gmd:MD_KeywordTypeCode">
+    <label>Keyword Type Code</label>
   </element>
- <element name="gmd:DQ_EvaluationMethodTypeCode">
-  <label>Evaluation Method Type Code</label>
+  <element name="gmd:DQ_EvaluationMethodTypeCode">
+    <label>Evaluation Method Type Code</label>
   </element>
- <element name="gmd:LocalisedCharacterString">
-  <label>Localised Character String</label>
+  <element name="gmd:LocalisedCharacterString">
+    <label>Localised Character String</label>
   </element>
- <element name="gmd:Country">
-  <label>Country</label>
+  <element name="gmd:Country">
+    <label>Country</label>
   </element>
- <element name="srv:SV_OperationModel">
-  <label>Service Operation Model</label>
+  <element name="srv:SV_OperationModel">
+    <label>Service Operation Model</label>
   </element>
- <element name="gmx:MimeFileType">
-  <label>Mime File Type</label>
+  <element name="gmx:MimeFileType">
+    <label>Mime File Type</label>
   </element>
-
-<element name="gmx:ML_ProjectedCRS">
-  <label>Projected CRS</label>
+  <element name="gmx:ML_ProjectedCRS">
+    <label>Projected CRS</label>
   </element>
-<element name="gml:DerivedCRS">
-  <label>Derived CRS</label>
+  <element name="gml:DerivedCRS">
+    <label>Derived CRS</label>
   </element>
-<element name="gmx:ML_DerivedCRS">
-  <label>Derived CRS</label>
+  <element name="gmx:ML_DerivedCRS">
+    <label>Derived CRS</label>
   </element>
-<element name="gml:GeodeticCRS">
-  <label>Geodetic CRS</label>
+  <element name="gml:GeodeticCRS">
+    <label>Geodetic CRS</label>
   </element>
-<element name="gmx:ML_GeodeticCRS">
-  <label>Geodetic CRS</label>
+  <element name="gmx:ML_GeodeticCRS">
+    <label>Geodetic CRS</label>
   </element>
-<element name="gmx:ML_VerticalCRS">
-  <label>Vertical CRS</label>
+  <element name="gmx:ML_VerticalCRS">
+    <label>Vertical CRS</label>
   </element>
-<element name="gml:EngineeringCRS">
-  <label>Engineering CRS</label>
+  <element name="gml:EngineeringCRS">
+    <label>Engineering CRS</label>
   </element>
-<element name="gmx:ML_EngineeringCRS">
-  <label>Engineering CRS</label>
+  <element name="gmx:ML_EngineeringCRS">
+    <label>Engineering CRS</label>
   </element>
-<element name="gml:ImageCRS">
-  <label>Image CRS</label>
+  <element name="gml:ImageCRS">
+    <label>Image CRS</label>
   </element>
-<element name="gmx:ML_ImageCRS">
-  <label>Image CRS</label>
+  <element name="gmx:ML_ImageCRS">
+    <label>Image CRS</label>
   </element>
-<element name="gml:TemporalCRS">
-  <label>Temporal CRS</label>
+  <element name="gml:TemporalCRS">
+    <label>Temporal CRS</label>
   </element>
-<element name="gmx:ML_TemporalCRS">
-  <label>Temporal CRS</label>
+  <element name="gmx:ML_TemporalCRS">
+    <label>Temporal CRS</label>
   </element>
-<element name="gml:GeographicCRS">
-  <label>Geographic CRS</label>
+  <element name="gml:GeographicCRS">
+    <label>Geographic CRS</label>
   </element>
-<element name="gml:GeocentricCRS">
-  <label>Geocentric CRS</label>
+  <element name="gml:GeocentricCRS">
+    <label>Geocentric CRS</label>
   </element>
-<element name="gml:CompoundCRS">
-  <label>Compound CRS</label>
+  <element name="gml:CompoundCRS">
+    <label>Compound CRS</label>
   </element>
-<element name="gmx:ML_CompoundCRS">
-  <label>Compound CRS</label>
+  <element name="gmx:ML_CompoundCRS">
+    <label>Compound CRS</label>
   </element>
-  </labels>
+</labels>
