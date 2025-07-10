@@ -220,6 +220,14 @@
                         </gco:CharacterString>
                       </gmd:title>
 
+                      <gmd:alternateTitle>
+                        <gco:CharacterString>
+                          <xsl:value-of select="gn-fn-sparql:getObject($root,
+                                                  'http://purl.org/dc/terms/alternative_name',
+                                                  $resourceUri)/sr:literal"/>
+                        </gco:CharacterString>
+                      </gmd:alternateTitle>
+
                       <xsl:variable name="dateTypes" as="node()*">
                         <type dcatType="created" isoType="creation"/>
                         <type dcatType="modified" isoType="revision"/>
@@ -301,20 +309,34 @@
 
                   <!-- descriptive Keywords -->
                   <!-- free text only -->
-
                   <gmd:descriptiveKeywords>
                     <gmd:MD_Keywords>
-                      <xsl:for-each select="gn-fn-sparql:getObject($root,
+                      <xsl:variable name="theme"
+                                    select="gn-fn-sparql:getObject($root,
                                                       ('http://www.w3.org/ns/dcat#theme'),
-                                                      $resourceUri)/sr:bnode">
-                        <xsl:variable name="label"
-                                      select="gn-fn-sparql:getObject($root,
-                                                  'http://www.w3.org/2004/02/skos/core#prefLabel',
-                                                  .)/sr:literal"/>
-                        <gmd:keyword>
-                          <gco:CharacterString><xsl:value-of select="$label"/></gco:CharacterString>
-                        </gmd:keyword>
-                      </xsl:for-each>
+                                                      $resourceUri)/sr:bnode"/>
+                      <xsl:choose>
+                        <xsl:when test="$theme">
+                          <xsl:for-each select="$theme">
+                            <xsl:variable name="label"
+                                          select="gn-fn-sparql:getObject($root,
+                                                      'http://www.w3.org/2004/02/skos/core#prefLabel',
+                                                      .)/sr:literal"/>
+                            <gmd:keyword>
+                              <gco:CharacterString><xsl:value-of select="$label"/></gco:CharacterString>
+                            </gmd:keyword>
+                          </xsl:for-each>
+                        </xsl:when>
+                        <xsl:otherwise>
+                          <xsl:for-each select="gn-fn-sparql:getObject($root,
+                                                      ('http://www.w3.org/ns/dcat#keyword'),
+                                                      $resourceUri)/sr:literal">
+                              <gmd:keyword>
+                                  <gco:CharacterString><xsl:value-of select="."/></gco:CharacterString>
+                              </gmd:keyword>
+                          </xsl:for-each>
+                        </xsl:otherwise>
+                      </xsl:choose>
                     </gmd:MD_Keywords>
                   </gmd:descriptiveKeywords>
 
@@ -338,8 +360,34 @@
                         <gmd:MD_RestrictionCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_RestrictionCode"
                                                 codeListValue="otherRestrictions"/>
                       </gmd:useConstraints>
+
+                      <!-- Add license information from DCAT -->
                       <gmd:otherConstraints>
-                        <gmx:Anchor>no conditions apply</gmx:Anchor>
+                        <xsl:variable name="license"
+                                      select="gn-fn-sparql:getObject($root,
+                                                'http://purl.org/dc/terms/license',
+                                                $resourceUri)/sr:literal"/>
+                        <xsl:variable name="licenseUrl"
+                                      select="normalize-space(gn-fn-sparql:getObject($root,
+                                                'http://purl.org/dc/terms/license_url',
+                                                $resourceUri))"/>
+                        <xsl:choose>
+                          <xsl:when test="$license">
+                            <xsl:choose>
+                              <xsl:when test="$licenseUrl">
+                                <gmx:Anchor xlink:href="{$licenseUrl}"><xsl:value-of select="$license"/></gmx:Anchor>
+                              </xsl:when>
+                              <xsl:otherwise>
+                                <gco:CharacterString><xsl:value-of select="$license"/></gco:CharacterString>
+                              </xsl:otherwise>
+                            </xsl:choose>
+                          </xsl:when>
+                          <xsl:otherwise>
+                            <gmd:otherConstraints>
+                              <gmx:Anchor>no conditions apply</gmx:Anchor>
+                            </gmd:otherConstraints>
+                          </xsl:otherwise>
+                        </xsl:choose>
                       </gmd:otherConstraints>
                     </gmd:MD_LegalConstraints>
                   </gmd:resourceConstraints>
@@ -442,9 +490,6 @@
                       </xsl:if>
                     </xsl:for-each>
                   </xsl:for-each>
-
-
-
                 </gmd:MD_DataIdentification>
               </xsl:otherwise>
             </xsl:choose>
@@ -561,64 +606,64 @@
               </gmd:transferOptions>
             </gmd:MD_Distribution>
           </gmd:distributionInfo>
-        </xsl:for-each>
 
-        <!-- Data Quality -->
-        <!-- scope and conformity are hard-coded as there's nothing in the rdf -->
-      <gmd:dataQualityInfo >
-          <gmd:DQ_DataQuality>
-             <gmd:scope>
+          <!-- Data Quality -->
+          <!-- scope and conformity are hard-coded as there's nothing in the rdf -->
+          <gmd:dataQualityInfo >
+            <gmd:DQ_DataQuality>
+              <gmd:scope>
                 <gmd:DQ_Scope>
-                   <gmd:level>
+                    <gmd:level>
                       <gmd:MD_ScopeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ScopeCode"
                                         codeListValue="dataset"/>
-                   </gmd:level>
+                    </gmd:level>
                 </gmd:DQ_Scope>
-             </gmd:scope>
-             <gmd:report>
+              </gmd:scope>
+              <gmd:report>
                 <gmd:DQ_DomainConsistency>
-                   <gmd:result>
-                      <gmd:DQ_ConformanceResult>
-                         <gmd:specification>
-                            <gmd:CI_Citation>
-                               <gmd:title>
-                                  <gmx:Anchor xlink:href="http://data.europa.eu/eli/reg/2010/1089">Commission Regulation (EU) No 1089/2010 of 23 November 2010 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards interoperability of spatial data sets and services</gmx:Anchor>
-                               </gmd:title>
-                               <gmd:date>
-                                  <gmd:CI_Date>
-                                     <gmd:date>
-                                        <gco:Date>2010-12-08</gco:Date>
-                                     </gmd:date>
-                                     <gmd:dateType>
-                                        <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
-                                                             codeListValue="publication"/>
-                                     </gmd:dateType>
-                                  </gmd:CI_Date>
-                               </gmd:date>
-                            </gmd:CI_Citation>
-                         </gmd:specification>
-                         <gmd:explanation gco:nilReason="inapplicable"/>
-                         <gmd:pass gco:nilReason="unknown"/>
-                      </gmd:DQ_ConformanceResult>
-                   </gmd:result>
+                  <gmd:result>
+                    <gmd:DQ_ConformanceResult>
+                      <gmd:specification>
+                        <gmd:CI_Citation>
+                          <gmd:title>
+                            <gmx:Anchor xlink:href="http://data.europa.eu/eli/reg/2010/1089">Commission Regulation (EU) No 1089/2010 of 23 November 2010 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards interoperability of spatial data sets and services</gmx:Anchor>
+                          </gmd:title>
+                          <gmd:date>
+                            <gmd:CI_Date>
+                              <gmd:date>
+                                <gco:Date>2010-12-08</gco:Date>
+                              </gmd:date>
+                              <gmd:dateType>
+                                <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
+                                                      codeListValue="publication"/>
+                              </gmd:dateType>
+                            </gmd:CI_Date>
+                          </gmd:date>
+                        </gmd:CI_Citation>
+                      </gmd:specification>
+                      <gmd:explanation gco:nilReason="inapplicable"/>
+                      <gmd:pass gco:nilReason="unknown"/>
+                    </gmd:DQ_ConformanceResult>
+                  </gmd:result>
                 </gmd:DQ_DomainConsistency>
-             </gmd:report>
-        <xsl:variable name="lineage"
-                        select="gn-fn-sparql:getObject($root,
-                                    ('http://purl.org/dc/terms/provenance', 'http://www.w3.org/2000/01/rdf-schema#label'),
-                                    .)/sr:literal"/>
+              </gmd:report>
+              <xsl:variable name="lineage"
+                            select="gn-fn-sparql:getObject($root,
+                                                'http://purl.org/dc/terms/lineage',
+                                                $resourceUri)/sr:literal"/>
 
-          <xsl:if test="$lineage != ''">
-            <gmd:lineage>
-              <gmd:LI_Lineage>
-                <gmd:statement>
-                  <gco:CharacterString><xsl:value-of select="$lineage"/> </gco:CharacterString>
-                </gmd:statement>
-              </gmd:LI_Lineage>
-            </gmd:lineage>
-          </xsl:if>
-          </gmd:DQ_DataQuality>
-      </gmd:dataQualityInfo>
+              <xsl:if test="$lineage != ''">
+                <gmd:lineage>
+                  <gmd:LI_Lineage>
+                    <gmd:statement>
+                      <gco:CharacterString><xsl:value-of select="$lineage"/></gco:CharacterString>
+                    </gmd:statement>
+                  </gmd:LI_Lineage>
+                </gmd:lineage>
+              </xsl:if>
+            </gmd:DQ_DataQuality>
+          </gmd:dataQualityInfo>
+        </xsl:for-each>
       </gmd:MD_Metadata>
     </xsl:for-each>
   </xsl:template>
