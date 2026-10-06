@@ -20,4 +20,4 @@ Deprecated Versions:
 Current Active Versions:
 
 * [GeoNetwork 4.2.x](https://github.com/AstunTechnology/iso19139.gemini23/tree/4.2.x)
-
+* [GeoNetwork 4.4.x](https://github.com/AstunTechnology/iso19139.gemini23/tree/4.4.x)
