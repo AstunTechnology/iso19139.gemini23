@@ -302,7 +302,11 @@
                 </xsl:element>
               </xsl:when>
               <xsl:otherwise>
-                <xsl:copy-of select="gn-fn-index:add-field('indexingErrorMsg', concat('Warning / Date ', $dateType, ' with value ''', $date, ''' was not a valid date format.'))"/>
+                <indexingErrorMsg type="object">{
+                  "string": "<xsl:value-of select="concat('Warning / Date ''', $dateType, ''' with value ''', $date, ''' was not a valid date format.')"/>",
+                  "type": "warning",
+                  "values": {}
+                }</indexingErrorMsg>
               </xsl:otherwise>
             </xsl:choose>
           </xsl:for-each>
@@ -504,7 +508,12 @@
                      found in the thesaurus. Try to anticipate this and advertise those
                      records in the admin. -->
                     <xsl:if test="$thesaurusId != '' and $keywordUri = ''">
-                      <xsl:copy-of select="gn-fn-index:add-field('indexingErrorMsg', concat('Warning / Keyword ', (*/text())[1], ' not found in ', $thesaurusId, '.'))"/>
+                      <xsl:variable name="thesaurusLabel" select="if ($thesaurusTitle != '') then $thesaurusTitle else $thesaurusId"/>
+                      <indexingErrorMsg type="object">{
+                        "string": "Warning / Keyword '<xsl:value-of select="normalize-space((*/text())[1])"/>' not found in thesaurus '<xsl:value-of select="$thesaurusLabel"/>'.",
+                        "type": "warning",
+                        "values": {}
+                      }</indexingErrorMsg>
                     </xsl:if>
 
                     <tree>
@@ -738,14 +747,22 @@
                   }</resourceTemporalExtentDateRange>
               </xsl:when>
               <xsl:otherwise>
-                <xsl:copy-of select="gn-fn-index:add-field('indexingErrorMsg', 'Warning / Field resourceTemporalDateRange / Lower and upper bounds empty or not valid dates. Date range not indexed.')"/>
+                <indexingErrorMsg type="object">{
+                  "string": "indexingErrorMsg-invalidBounds",
+                  "type": "warning",
+                  "values": {}
+                }</indexingErrorMsg>
               </xsl:otherwise>
             </xsl:choose>
 
             <xsl:if test="$zuluStartDate castable as xs:dateTime
               and $zuluEndDate castable as xs:dateTime
               and $start &gt; $end">
-              <xsl:copy-of select="gn-fn-index:add-field('indexingErrorMsg', concat('Warning / Field resourceTemporalDateRange / Lower range bound ''', $start, ''' can not be greater than upper bound ''', $end, '''.'))"/>
+              <indexingErrorMsg type="object">{
+                "string": "<xsl:value-of select="concat('Warning / Field resourceTemporalDateRange / Lower range bound ''', $start, ''' can not be greater than upper bound ''', $end, '''.')"/>",
+                "type": "warning",
+                "values": {}
+              }</indexingErrorMsg>
             </xsl:if>
 
             <xsl:call-template name="build-range-details">
