@@ -476,13 +476,32 @@
     <view name="default" default="true">
       <sidePanel>
         <directive data-gn-validation-report="" data-initial-show-errors="true" data-initial-show-successes="false" data-initial-section-states="open"/>
-        <directive data-gn-onlinesrc-list=""/>
+        <directive data-gn-associated-resources-panel="gnCurrentEdit.metadata" />
         <directive gn-geo-publisher=""
                    data-ng-if="gnCurrentEdit.geoPublisherConfig"
                    data-config="{{gnCurrentEdit.geoPublisherConfig}}"
                    data-lang="lang"/>
+        <directive data-gn-distribution-resources-panel="gnCurrentEdit.metadata"
+                   data-mode="viewConfig.distributionConfig.layout || ''"
+                   data-editor-config="default"
+                   data-related-config="[{
+                                title: 'API',
+                                filter: 'protocol:OGC:.*|ESRI:.*|atom.*',
+                                editActions: ['addOnlinesrc']},
+                              {
+                                title: 'download',
+                                filter: 'protocol:.*DOWNLOAD.*|DB:.*|FILE:.*',
+                                editActions: ['addOnlinesrc']},
+                              {
+                                title: 'links',
+                                filter:'-protocol:OGC:.*|ESRI:.*|atom.*|.*DOWNLOAD.*|DB:.*|FILE:.* AND -function:legend|featureCatalogue|dataQualityReport',
+                                editActions: ['addOnlinesrc']}]"
+        />
+        <directive data-gn-overview-manager=""
+                   data-file-types=".png,.gif,.jpeg,.jpg"
+                   data-editable-thumbnail="true"/>
         <directive data-gn-suggestion-list=""/>
-        <directive data-gn-need-help="user-guide/describing-information/creating-metadata.html"/>
+        <directive data-gn-need-help="creating-metadata"/>
       </sidePanel>
 
       <tab id="default" default="true" mode="flat">
@@ -1025,9 +1044,9 @@
         <text ref="spatialrefsrv_help" if="count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification) > 0"/>
 
         <section name="gmd:distributionInfo">
-        
+
         <section name="gmd:distributionFormat">
-        
+
           <field xpath="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributionFormat" if="count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification) = 0"
                  del="."/>
 
@@ -1054,18 +1073,18 @@
         <text ref="distribution_help" if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0"/>
         <text ref="distributionsrv_help" if="count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification) > 0"/>
 
-           	</section>     
-                
+           	</section>
 
-           <section name="gmd:transferOptions">     
+
+           <section name="gmd:transferOptions">
         <!-- Links to resources -->
-          <field 
+          <field
                  xpath="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions
             /gmd:MD_DigitalTransferOptions/gmd:onLine"
                  del="."/>
           <text ref="resourcelocatorsrv_help" if="count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification) > 0"/>
 		        <text ref="resourcelocator_help" if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0"/>
-			</section>         
+			</section>
 
 </section>
         <!-- Start dataQualitySection -->
@@ -1079,7 +1098,7 @@
           </section>
           <!-- <section xpath="/gmd:MD_Metadata/gmd:dataQualityInfo" or="dataQualityInfo"
                  in="/gmd:MD_Metadata"/> -->
-           
+
           <!-- End dataQualitySection -->
 
         <section name="gmd:MD_Metadata">
@@ -1185,14 +1204,33 @@
     </view>
     <view name="advanced">
       <sidePanel>
-        <directive data-gn-onlinesrc-list=""/>
+        <directive data-gn-validation-report=""/>
+        <directive data-gn-associated-resources-panel="gnCurrentEdit.metadata" />
         <directive gn-geo-publisher=""
                    data-ng-if="gnCurrentEdit.geoPublisherConfig"
                    data-config="{{gnCurrentEdit.geoPublisherConfig}}"
                    data-lang="lang"/>
-        <directive data-gn-validation-report=""/>
+        <directive data-gn-distribution-resources-panel="gnCurrentEdit.metadata"
+                   data-mode="viewConfig.distributionConfig.layout || ''"
+                   data-editor-config="default"
+                   data-related-config="[{
+                                title: 'API',
+                                filter: 'protocol:OGC:.*|ESRI:.*|atom.*',
+                                editActions: ['addOnlinesrc']},
+                              {
+                                title: 'download',
+                                filter: 'protocol:.*DOWNLOAD.*|DB:.*|FILE:.*',
+                                editActions: ['addOnlinesrc']},
+                              {
+                                title: 'links',
+                                filter:'-protocol:OGC:.*|ESRI:.*|atom.*|.*DOWNLOAD.*|DB:.*|FILE:.* AND -function:legend|featureCatalogue|dataQualityReport',
+                                editActions: ['addOnlinesrc']}]"
+        />
+        <directive data-gn-overview-manager=""
+                   data-file-types=".png,.gif,.jpeg,.jpg"
+                   data-editable-thumbnail="true"/>
         <directive data-gn-suggestion-list=""/>
-        <directive data-gn-need-help="user-guide/describing-information/creating-metadata.html"/>
+        <directive data-gn-need-help="creating-metadata"/>
       </sidePanel>
 
       <tab id="identificationInfo" default="true">
@@ -1261,14 +1299,13 @@
     </view>
     <view name="xml">
       <sidePanel>
-        <directive data-gn-onlinesrc-list=""/>
         <directive gn-geo-publisher=""
                    data-ng-if="gnCurrentEdit.geoPublisherConfig"
                    data-config="{{gnCurrentEdit.geoPublisherConfig}}"
                    data-lang="lang"/>
         <directive data-gn-validation-report=""/>
         <directive data-gn-suggestion-list=""/>
-        <directive data-gn-need-help="user-guide/describing-information/creating-metadata.html"/>
+        <directive data-gn-need-help="creating-metadata"/>
       </sidePanel>
       <tab id="xml" default="true"/>
     </view>
