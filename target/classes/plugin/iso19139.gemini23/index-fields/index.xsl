@@ -32,6 +32,7 @@
                 xmlns:gml31="http://www.opengis.net/gml"
                 xmlns:xlink="http://www.w3.org/1999/xlink"
                 xmlns:gn-fn-index="http://geonetwork-opensource.org/xsl/functions/index"
+                xmlns:digestUtils="java:org.apache.commons.codec.digest.DigestUtils"
                 xmlns:index="java:org.fao.geonet.kernel.search.EsSearchManager"
                 xmlns:util="java:org.fao.geonet.util.XslUtil"
                 xmlns:date-util="java:org.fao.geonet.utils.DateUtil"
@@ -1021,6 +1022,8 @@
 
           <!-- Elasticsearch / OpenSearch JSON Link Object -->
           <link type="object">{
+            "idx": <xsl:value-of select="count(ancestor::gmd:transferOptions/preceding-sibling::gmd:transferOptions/*/*/gmd:onLine) + count(../preceding-sibling::gmd:onLine) + 1"/>,
+            "hash": "<xsl:value-of select="digestUtils:md5Hex(normalize-space(..))"/>",
             "protocol":"<xsl:value-of select="gn-fn-index:json-escape($protocol)"/>",
             "mimeType":"<xsl:value-of select="if (*/gmx:MimeFileType)
                                               then gn-fn-index:json-escape(*/gmx:MimeFileType/@type)
